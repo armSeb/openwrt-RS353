@@ -12,8 +12,16 @@ platform_do_upgrade() {
 	bt,homehub-v2b|bt,homehub-v3a|bt,homehub-v5a|zyxel,p-2812hnu-f1|zyxel,p-2812hnu-f3)
 		nand_do_upgrade $1
 		;;
+	bintec,rs230|bintec,rs353)
+		default_do_upgrade "$ARGV"
+		do_fixboss
+		;;
 	*)
 		default_do_upgrade "$ARGV"
 		;;
 	esac
+}
+
+do_fixboss() {
+		mtd fixboss firmware
 }
