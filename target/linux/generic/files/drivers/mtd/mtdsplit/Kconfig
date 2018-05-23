@@ -70,6 +70,11 @@ config MTD_SPLIT_MINOR_FW
 	depends on MTD_SPLIT_SUPPORT
 	select MTD_SPLIT
 
+config MTD_SPLIT_BINTEC_FW
+	bool "Bintec (Boss image) firmware parser"
+	depends on MTD_SPLIT_SUPPORT
+	select MTD_SPLIT
+
 config MTD_SPLIT_JIMAGE_FW
 	bool "JBOOT Image based firmware partition parser"
 	depends on MTD_SPLIT_SUPPORT
