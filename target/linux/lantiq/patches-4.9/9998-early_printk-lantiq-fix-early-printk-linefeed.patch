@@ -1,0 +1,15 @@
+--- a/arch/mips/lantiq/early_printk.c
++++ b/arch/mips/lantiq/early_printk.c
+@@ -25,8 +25,11 @@ void prom_putchar(char c)
+ 
+ 	local_irq_save(flags);
+ 	do { } while ((ltq_r32(LTQ_ASC_FSTAT) & TXMASK) >> TXOFFSET);
+-	if (c == '\n')
++	if (c == '\n') {
+ 		ltq_w8('\r', LTQ_ASC_TBUF);
++		do { } while ((ltq_r32(LTQ_ASC_FSTAT) & TXMASK) >> TXOFFSET);
++	}
++
+ 	ltq_w8(c, LTQ_ASC_TBUF);
+ 	local_irq_restore(flags);
+ }
