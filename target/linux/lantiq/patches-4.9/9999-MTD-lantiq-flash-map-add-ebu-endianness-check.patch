@@ -1,0 +1,29 @@
+--- a/drivers/mtd/maps/lantiq-flash.c
++++ b/drivers/mtd/maps/lantiq-flash.c
+@@ -199,7 +199,11 @@
+ 			goto err_out;
+ 		}
+ 
+-		ltq_mtd->map[i].map_priv_1 = LTQ_NOR_PROBING;
++		/* We enable the endianness workaroud only if EBU swap is enabled */
++		if (ltq_ebu_r32(LTQ_EBU_BUSCON0) & BIT(30))
++			ltq_mtd->map[i].map_priv_1 = LTQ_NOR_NORMAL;
++		else
++			ltq_mtd->map[i].map_priv_1 = LTQ_NOR_PROBING;
+ 		for (type = rom_probe_types; !ltq_mtd->mtd[i] && *type; type++)
+ 			ltq_mtd->mtd[i] = do_map_probe(*type, &ltq_mtd->map[i]);
+ 		ltq_mtd->map[i].map_priv_1 = LTQ_NOR_NORMAL;
+@@ -215,8 +219,11 @@
+ 		ltq_mtd->mtd[i]->dev.parent = &pdev->dev;
+ 
+ 		cfi = ltq_mtd->map[i].fldrv_priv;
+-		cfi->addr_unlock1 ^= 1;
+-		cfi->addr_unlock2 ^= 1;
++		/* We enable the endianness workaroud only if EBU swap is enabled */
++		if (!(ltq_ebu_r32(LTQ_EBU_BUSCON0) & BIT(30))) {
++			cfi->addr_unlock1 ^= 1;
++			cfi->addr_unlock2 ^= 1;
++		}
+ 	}
+ 
+ 	if (devices_found == 1) {
