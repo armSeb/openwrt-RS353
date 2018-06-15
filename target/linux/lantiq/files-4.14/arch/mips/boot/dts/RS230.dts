@@ -1,0 +1,124 @@
+/dts-v1/;
+
+#include "danube.dtsi"
+
+/ {
+	compatible = "bintec,rs230", "lantiq,xway", "lantiq,danube";
+	model = "Bintec RS230";
+
+	chosen {
+		bootargs = "console=ttyLTQ0,115200 init=/etc/preinit";
+
+	};
+
+	memory@0 {
+		reg = <0x0 0x4000000>;
+	};
+
+	sram@1F000000 {
+		vmmc@107000 {
+			status = "okay";
+		};
+	};
+
+	fpi@10000000 {
+		localbus@0 {
+			nor-boot@0 {
+				compatible = "lantiq,nor";
+				bank-width = <2>;
+				reg = <0 0x0 0x1000000>;
+				#address-cells = <1>;
+				#size-cells = <1>;
+
+				partitions {
+					compatible = "fixed-partitions";
+					#address-cells = <1>;
+					#size-cells = <1>;
+
+					partition@0 {
+						label = "logic_config";
+						reg = <0x00000 0x20000>;
+						read-only;
+					};
+
+					partition@20000 {
+						label = "logic";
+						reg = <0x20000 0x20000>;
+						read-only;
+					};
+
+					partition@40000 {
+						label = "bootmonitor";
+						reg = <0x40000 0x20000>;
+						read-only;
+					};
+
+					partition@61000 {
+						label = "flash_config";
+						reg = <0x61000 0x1f000>;
+						read-only;
+					};
+
+					partition@80000 {
+						label = "firmware";
+						reg = <0x80000 0xF80000>;
+					};
+				};
+			};
+
+		};
+
+		gpio: pinmux@E100B10 {
+			pinctrl-names = "default";
+			pinctrl-0 = <&state_default>;
+
+			state_default: pinmux {
+				mdio {
+                                        lantiq,groups = "mdio";
+                                        lantiq,function = "mdio";
+                                };
+				ebu {
+					lantiq,groups = "ebu cs1";
+					lantiq,function = "ebu";
+				};
+				switch_rst {
+					lantiq,pins = "io19";
+					lantiq,pull = <2>;
+					lantiq,output = <1>;
+				};
+			};
+		};
+
+		etop: etop@E180000 {
+	        	status = "okay";
+        		phy-mode = "mii";
+			lantiq,switch;
+
+			mdio@1e180000.etop-ff {
+		                #address-cells = <1>;
+                		#size-cells = <0>;
+				reg = <0x10>;
+                		compatible = "ltq_mii";
+			};
+		};
+
+		/* warning: passive port
+		only works with active devices */
+		ifxhcd@E101000 {
+			status = "okay";
+		};
+
+	};
+
+	gpio-keys-polled {
+		compatible = "gpio-keys-polled";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		poll-interval = <100>;
+
+	};
+
+	gpio-leds {
+		compatible = "gpio-leds";
+	};
+};
