@@ -715,6 +715,9 @@ ar71xx_board_detect() {
 	*"FRITZ!WLAN Repeater 300E")
 		name="fritz300e"
 		;;
+	*"FRITZ!WLAN Repeater 450E")
+		name="fritz450e"
+		;;
 	*"GL-AR150")
 		name="gl-ar150"
 		;;
@@ -1078,6 +1081,9 @@ ar71xx_board_detect() {
 		;;
 	*"RouterBOARD wAP 2nD r2")
 		name="rb-wap-2nd"
+		;;
+	*"RouterBOARD wAP R-2nD")
+		name="rb-wapr-2nd"
 		;;
 	*"RouterBOARD wAP G-5HacT2HnD")
 		name="rb-wapg-5hact2hnd"
