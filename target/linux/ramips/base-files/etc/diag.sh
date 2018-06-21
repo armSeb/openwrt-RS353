@@ -22,6 +22,7 @@ get_status_led() {
 	dch-m225|\
 	dir-860l-b1|\
 	e1700|\
+	elecom,wrc-1167ghbk2-s|\
 	ex2700|\
 	ex3700|\
 	fonera20n|\
@@ -205,6 +206,9 @@ get_status_led() {
 	m4-4M|\
 	m4-8M)
 		status_led="m4:blue:status"
+		;;
+	mikrotik,rbm33g)
+		status_led="rbm33g:green:usr"
 		;;
 	miwifi-mini|\
 	zte-q7)
