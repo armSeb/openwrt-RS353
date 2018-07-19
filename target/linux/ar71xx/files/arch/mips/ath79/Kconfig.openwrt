@@ -1133,6 +1133,7 @@ config ATH79_MACH_RBSPI
 	  MikroTik ROuterBOARD 911-5Hn (911 Lite5)
 	  MikroTik RouterBOARD mAP
 	  MikroTik RouterBOARD mAP lite
+	  MikroTik RouterBOARD hAP mini
 	  MikroTik RouterBOARD hAP lite
 	  MikroTik RouterBOARD hAP
 	  MikroTik RouterBOARD hAP ac
@@ -1585,6 +1586,7 @@ config ATH79_MACH_CPE505N
 config ATH79_MACH_CPE510
 	bool "TP-LINK CPE510 support"
 	select SOC_AR934X
+	select SOC_QCA953X
 	select ATH79_DEV_ETH
 	select ATH79_DEV_GPIO_BUTTONS
 	select ATH79_DEV_LEDS_GPIO
