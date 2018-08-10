@@ -27,8 +27,6 @@
 
 	keys {
 		compatible = "gpio-keys-polled";
-		#address-cells = <1>;
-		#size-cells = <0>;
 		poll-interval = <100>;
 
 		wps {
@@ -66,9 +64,7 @@
 	num-chipselects = <1>;
 	status = "okay";
 
-	spiflash {
-		#address-cells = <1>;
-		#size-cells = <1>;
+	flash@0 {
 		compatible = "jedec,spi-nor";
 		spi-max-frequency = <104000000>;
 		reg = <0>;
@@ -108,12 +104,6 @@
 
 	mtd-mac-address = <&art 0x1002>;
 	mtd-mac-address-increment = <0x40>;
-
-	fixed-link {
-		speed = <1000>;
-		full-duplex;
-	};
-
 };
 
 &mdio1 {

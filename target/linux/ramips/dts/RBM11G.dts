@@ -7,7 +7,7 @@
 
 / {
 	compatible = "mikrotik,rbm11g", "mediatek,mt7621-soc";
-	model = "MikroTik RBM11G";
+	model = "MikroTik RouterBOARD M11G";
 
 	aliases {
 		led-status = &led_usr;
@@ -58,8 +58,6 @@
 
 	gpio-keys-polled {
 		compatible = "gpio-keys-polled";
-		#address-cells = <1>;
-		#size-cells = <0>;
 		poll-interval = <20>;
 		res {
 			label = "reset";
@@ -86,27 +84,31 @@
 	status = "okay";
 
 	w25q128@0 {
-		#address-cells = <1>;
-		#size-cells = <1>;
 		compatible = "jedec,spi-nor";
 		reg = <0>;
 		spi-max-frequency = <3125000>;
 
-		partition@0 {
-			label = "routerboot";
-			reg = <0x000000 0x00F000>;
-			read-only;
-		};
+		partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
 
-		factory: partition@f000 {
-			label = "factory";
-			reg = <0x00F000 0x031000>;
-			read-only;
-		};
+			partition@0 {
+				label = "routerboot";
+				reg = <0x000000 0x00F000>;
+				read-only;
+			};
 
-		partition@40000 {
-			label = "firmware";
-			reg = <0x040000 0xFC0000>;
+			factory: partition@f000 {
+				label = "factory";
+				reg = <0x00F000 0x031000>;
+				read-only;
+			};
+
+			partition@40000 {
+				label = "firmware";
+				reg = <0x040000 0xFC0000>;
+			};
 		};
 	};
 };

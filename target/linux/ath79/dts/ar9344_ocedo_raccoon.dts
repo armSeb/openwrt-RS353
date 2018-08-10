@@ -10,6 +10,10 @@
 	model = "OCEDO Raccoon";
 	compatible = "ocedo,raccoon", "qca,ar9344";
 
+	chosen {
+		bootargs = "console=ttyS0,115200n8";
+	};
+
 	aliases {
 		led-status = &system;
 	};
@@ -49,8 +53,6 @@
 
 	keys {
 		compatible = "gpio-keys-polled";
-		#address-cells = <1>;
-		#size-cells = <0>;
 		poll-interval = <20>;
 
 		reset {
@@ -79,8 +81,6 @@
 	status = "okay";
 
 	flash@0 {
-		#address-cells = <1>;
-		#size-cells = <1>;
 		compatible = "jedec,spi-nor";
 		reg = <0>;
 		spi-max-frequency = <25000000>;
@@ -136,7 +136,7 @@
 &pcie {
 	status = "okay";
 
-	ath9k: wifi@168c,0030 {
+	ath9k: wifi@0,0 {
 		compatible = "pci168c,0030";
 		reg = <0x0000 0 0 0 0>;
 		mtd-mac-address = <&art 0xc>;
