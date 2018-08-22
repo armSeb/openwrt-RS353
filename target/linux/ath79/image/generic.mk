@@ -13,6 +13,19 @@ define Device/avm_fritz300e
 endef
 TARGET_DEVICES += avm_fritz300e
 
+define Device/avm_fritz4020
+  ATH_SOC := qca9561
+  DEVICE_TITLE := AVM FRITZ!Box 4020
+  IMAGE_SIZE := 15232k
+  KERNEL := kernel-bin | append-dtb | lzma | eva-image
+  KERNEL_INITRAMFS := $$(KERNEL)
+  IMAGE/sysupgrade.bin := append-kernel | pad-to 64k | \
+      append-squashfs-fakeroot-be | pad-to 256 | \
+      append-rootfs | pad-rootfs | append-metadata | check-size $$$$(IMAGE_SIZE)
+  DEVICE_PACKAGES := fritz-tffs
+endef
+TARGET_DEVICES += avm_fritz4020
+
 define Device/buffalo_wzr-hp-g450h
   ATH_SOC := ar7242
   DEVICE_TITLE := Buffalo WZR-HP-G450H
@@ -21,6 +34,16 @@ define Device/buffalo_wzr-hp-g450h
   SUPPORTED_DEVICES += wzr-hp-g450h
 endef
 TARGET_DEVICES += buffalo_wzr-hp-g450h
+
+define Device/dlink_dir-825-b1
+  ATH_SOC := ar7161
+  DEVICE_TITLE := D-LINK DIR-825 B1
+  IMAGE_SIZE := 6208k
+  IMAGE/sysupgrade.bin := append-kernel | append-rootfs | pad-rootfs | append-metadata | check-size $$$$(IMAGE_SIZE)
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb-ohci kmod-usb2 kmod-usb-ledtrig-usbport kmod-leds-reset kmod-owl-loader
+  SUPPORTED_DEVICES += dir-825-b1
+endef
+TARGET_DEVICES += dlink_dir-825-b1
 
 define Device/embeddedwireless_dorin
   ATH_SOC := ar9331
@@ -56,6 +79,30 @@ define Device/glinet_ar300m_nor
   SUPPORTED_DEVICES += gl-ar300m
 endef
 TARGET_DEVICES += glinet_ar300m_nor
+
+define Device/iodata_wn-ac1167dgr
+  ATH_SOC := qca9557
+  DEVICE_TITLE := I-O DATA WN-AC1167DGR
+  IMAGE_SIZE := 14656k
+  IMAGES += factory.bin
+  IMAGE/factory.bin := append-kernel | pad-to $$$$(BLOCKSIZE) | \
+    append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE) | \
+    senao-header -r 0x30a -p 0x61 -t 2
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-ath10k ath10k-firmware-qca988x
+endef
+TARGET_DEVICES += iodata_wn-ac1167dgr
+
+define Device/iodata_wn-ac1600dgr2
+  ATH_SOC := qca9557
+  DEVICE_TITLE := I-O DATA WN-AC1600DGR2
+  IMAGE_SIZE := 14656k
+  IMAGES += factory.bin
+  IMAGE/factory.bin := append-kernel | pad-to $$$$(BLOCKSIZE) | \
+    append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE) | \
+    senao-header -r 0x30a -p 0x60 -t 2 -v 200
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-ath10k ath10k-firmware-qca988x
+endef
+TARGET_DEVICES += iodata_wn-ac1600dgr2
 
 define Device/ocedo_koala
   ATH_SOC := qca9558
@@ -105,27 +152,63 @@ TARGET_DEVICES += pcs_cr3000
 define Device/pcs_cr5000
   ATH_SOC := ar9344
   DEVICE_TITLE := PowerCloud Systems CR5000
-  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ledtrig-usbport kmod-usb-core
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-core
   IMAGE_SIZE := 7808k
   IMAGES := sysupgrade.bin
   SUPPORTED_DEVICES += cr5000
 endef
 TARGET_DEVICES += pcs_cr5000
 
-define Device/netgear_wndr3800
+define Device/netgear_wndr3x00
   ATH_SOC := ar7161
-  DEVICE_TITLE := NETGEAR WNDR3800
-  NETGEAR_KERNEL_MAGIC := 0x33373031
   KERNEL := kernel-bin | append-dtb | lzma -d20 | netgear-uImage lzma
-  KERNEL_INITRAMFS := kernel-bin | append-dtb | lzma -d20 | netgear-uImage lzma
-  NETGEAR_BOARD_ID := WNDR3800
-  NETGEAR_HW_ID := 29763654+16+128
-  IMAGE_SIZE := 15872k
   IMAGES := sysupgrade.bin factory.img
   IMAGE/default := append-kernel | pad-to $$$$(BLOCKSIZE) | netgear-squashfs | append-rootfs | pad-rootfs
   IMAGE/sysupgrade.bin := $$(IMAGE/default) | append-metadata | check-size $$$$(IMAGE_SIZE)
   IMAGE/factory.img := $$(IMAGE/default) | netgear-dni | check-size $$$$(IMAGE_SIZE)
-  DEVICE_PACKAGES := kmod-usb-core kmod-usb-ohci kmod-usb2 kmod-usb-ledtrig-usbport kmod-leds-reset
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb-ohci kmod-usb2 kmod-usb-ledtrig-usbport kmod-leds-reset kmod-owl-loader
+endef
+
+define Device/netgear_wndr3700
+  $(Device/netgear_wndr3x00)
+  DEVICE_TITLE := NETGEAR WNDR3700
+  NETGEAR_KERNEL_MAGIC := 0x33373030
+  NETGEAR_BOARD_ID := WNDR3700
+  IMAGE_SIZE := 7680k
+  IMAGES += factory-NA.img
+  IMAGE/factory-NA.img := $$(IMAGE/default) | netgear-dni NA | check-size $$$$(IMAGE_SIZE)
+  SUPPORTED_DEVICES += wndr3700
+endef
+TARGET_DEVICES += netgear_wndr3700
+
+define Device/netgear_wndr3700v2
+  $(Device/netgear_wndr3x00)
+  DEVICE_TITLE := NETGEAR WNDR3700v2
+  NETGEAR_KERNEL_MAGIC := 0x33373031
+  NETGEAR_BOARD_ID := WNDR3700v2
+  NETGEAR_HW_ID := 29763654+16+64
+  IMAGE_SIZE := 15872k
+  SUPPORTED_DEVICES += wndr3700v2
+endef
+TARGET_DEVICES += netgear_wndr3700v2
+
+define Device/pisen_wmm003n
+  $(Device/tplink-8mlzma)
+  ATH_SOC := ar9331
+  DEVICE_TITLE := Pisen WMM003N (Cloud Easy Power)
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-chipidea2
+  TPLINK_HWID := 0x07030101
+  IMAGES := sysupgrade.bin
+endef
+TARGET_DEVICES += pisen_wmm003n
+
+define Device/netgear_wndr3800
+  $(Device/netgear_wndr3x00)
+  DEVICE_TITLE := NETGEAR WNDR3800
+  NETGEAR_KERNEL_MAGIC := 0x33373031
+  NETGEAR_BOARD_ID := WNDR3800
+  NETGEAR_HW_ID := 29763654+16+128
+  IMAGE_SIZE := 15872k
   SUPPORTED_DEVICES += wndr3800
 endef
 TARGET_DEVICES += netgear_wndr3800

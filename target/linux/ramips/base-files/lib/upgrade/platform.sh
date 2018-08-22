@@ -73,6 +73,7 @@ platform_check_image() {
 	hc5*61|\
 	hc5661a|\
 	hg255d|\
+	hiwifi,hc5861b|\
 	hlk-rm04|\
 	hpm|\
 	ht-tm02|\
@@ -132,6 +133,7 @@ platform_check_image() {
 	psr-680w|\
 	px-4885-4M|\
 	px-4885-8M|\
+	netgear,r6120|\
 	rb750gr3|\
 	re6500|\
 	rp-n53|\
@@ -240,7 +242,7 @@ platform_check_image() {
 	3g-6200n|\
 	3g-6200nl|\
 	br-6475nd|\
-	br-6478ac-v2)
+	edimax,br-6478ac-v2)
 		[ "$magic" != "43535953" ] && {
 			echo "Invalid image type."
 			return 1
@@ -287,6 +289,7 @@ platform_check_image() {
 		return 0
 		;;
 	dlink,dwr-116-a1|\
+	dlink,dwr-118-a2|\
 	dlink,dwr-921-c1|\
 	dwr-512-b)
 		[ "$magic" != "0404242b" ] && {
@@ -364,9 +367,3 @@ platform_do_upgrade() {
 		;;
 	esac
 }
-
-blink_led() {
-	. /etc/diag.sh; set_state upgrade
-}
-
-append sysupgrade_pre_upgrade blink_led
