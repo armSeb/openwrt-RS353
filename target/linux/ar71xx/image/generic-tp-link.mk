@@ -9,12 +9,12 @@ endef
 define Device/archer-c25-v1
   $(Device/archer-cxx)
   DEVICE_TITLE := TP-LINK Archer C25 v1
-  DEVICE_PACKAGES := kmod-ath10k ath10k-firmware-qca9887
+  DEVICE_PACKAGES := kmod-ath10k-ct ath10k-firmware-qca9887-ct
   BOARDNAME := ARCHER-C25-V1
   TPLINK_BOARD_ID := ARCHER-C25-V1
   DEVICE_PROFILE := ARCHERC25V1
   IMAGE_SIZE := 7808k
-  MTDPARTS := spi0.0:128k(factory-uboot)ro,64k(u-boot)ro,1536k(kernel),6272k(rootfs),128k(config)ro,64k(art)ro,7808k@0x30000(firmware)
+  MTDPARTS := spi0.0:128k(factory-uboot)ro,64k(u-boot)ro,7808k(firmware),128k(config)ro,64k(art)ro
   SUPPORTED_DEVICES := archer-c25-v1
 endef
 TARGET_DEVICES += archer-c25-v1
@@ -22,7 +22,7 @@ TARGET_DEVICES += archer-c25-v1
 define Device/archer-c58-v1
   $(Device/archer-cxx)
   DEVICE_TITLE := TP-LINK Archer C58 v1
-  DEVICE_PACKAGES := kmod-ath10k ath10k-firmware-qca9888
+  DEVICE_PACKAGES := kmod-ath10k-ct ath10k-firmware-qca9888-ct
   BOARDNAME := ARCHER-C58-V1
   TPLINK_BOARD_ID := ARCHER-C58-V1
   DEVICE_PROFILE := ARCHERC58V1
@@ -35,12 +35,12 @@ TARGET_DEVICES += archer-c58-v1
 define Device/archer-c59-v1
   $(Device/archer-cxx)
   DEVICE_TITLE := TP-LINK Archer C59 v1
-  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k ath10k-firmware-qca9888
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k-ct ath10k-firmware-qca9888-ct
   BOARDNAME := ARCHER-C59-V1
   TPLINK_BOARD_ID := ARCHER-C59-V1
   DEVICE_PROFILE := ARCHERC59V1
   IMAGE_SIZE := 14528k
-  MTDPARTS := spi0.0:64k(u-boot)ro,64k(mac)ro,1536k(kernel),12992k(rootfs),1664k(tplink)ro,64k(art)ro,14528k@0x20000(firmware)
+  MTDPARTS := spi0.0:64k(u-boot)ro,64k(mac)ro,14528k(firmware),1664k(tplink)ro,64k(art)ro
   SUPPORTED_DEVICES := archer-c59-v1
 endef
 TARGET_DEVICES += archer-c59-v1
@@ -60,7 +60,7 @@ TARGET_DEVICES += archer-c59-v2
 define Device/archer-c60-v1
   $(Device/archer-cxx)
   DEVICE_TITLE := TP-LINK Archer C60 v1
-  DEVICE_PACKAGES := kmod-ath10k ath10k-firmware-qca9888
+  DEVICE_PACKAGES := kmod-ath10k-ct ath10k-firmware-qca9888-ct
   BOARDNAME := ARCHER-C60-V1
   TPLINK_BOARD_ID := ARCHER-C60-V1
   DEVICE_PROFILE := ARCHERC60V1
@@ -85,7 +85,7 @@ TARGET_DEVICES += archer-c60-v2
 define Device/archer-c5-v1
   $(Device/tplink-16mlzma)
   DEVICE_TITLE := TP-LINK Archer C5 v1
-  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k ath10k-firmware-qca988x
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k-ct ath10k-firmware-qca988x-ct
   BOARDNAME := ARCHER-C5
   DEVICE_PROFILE := ARCHERC7
   TPLINK_HWID := 0xc5000001
@@ -95,7 +95,7 @@ TARGET_DEVICES += archer-c5-v1
 define Device/archer-c7-v1
   $(Device/tplink-8mlzma)
   DEVICE_TITLE := TP-LINK Archer C7 v1
-  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k ath10k-firmware-qca988x
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k-ct ath10k-firmware-qca988x-ct
   BOARDNAME := ARCHER-C7
   DEVICE_PROFILE := ARCHERC7
   TPLINK_HWID := 0x75000001
@@ -105,7 +105,7 @@ TARGET_DEVICES += archer-c7-v1
 define Device/archer-c7-v2
   $(Device/tplink-16mlzma)
   DEVICE_TITLE := TP-LINK Archer C7 v2
-  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k ath10k-firmware-qca988x
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k-ct ath10k-firmware-qca988x-ct
   BOARDNAME := ARCHER-C7-V2
   DEVICE_PROFILE := ARCHERC7
   TPLINK_HWID := 0xc7000002
@@ -118,7 +118,7 @@ TARGET_DEVICES += archer-c7-v2
 define Device/archer-c7-v2-il
   $(Device/tplink-16mlzma)
   DEVICE_TITLE := TP-LINK Archer C7 v2 (IL)
-  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k ath10k-firmware-qca988x
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k-ct ath10k-firmware-qca988x-ct
   BOARDNAME := ARCHER-C7-V2
   DEVICE_PROFILE := ARCHERC7
   TPLINK_HWID := 0xc7000002
@@ -129,7 +129,7 @@ TARGET_DEVICES += archer-c7-v2-il
 define Device/tl-wdr7500-v3
   $(Device/tplink-8mlzma)
   DEVICE_TITLE := TP-LINK Archer C7 v3
-  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k ath10k-firmware-qca988x
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k-ct ath10k-firmware-qca988x-ct
   BOARDNAME := ARCHER-C7
   DEVICE_PROFILE := ARCHERC7
   TPLINK_HWID := 0x75000003
@@ -139,11 +139,11 @@ TARGET_DEVICES += tl-wdr7500-v3
 define Device/archer-c7-v4
   $(Device/archer-cxx)
   DEVICE_TITLE := TP-LINK Archer C7 v4
-  DEVICE_PACKAGES := kmod-ath10k ath10k-firmware-qca988x
+  DEVICE_PACKAGES := kmod-ath10k-ct ath10k-firmware-qca988x-ct
   BOARDNAME := ARCHER-C7-V4
   TPLINK_BOARD_ID := ARCHER-C7-V4
   IMAGE_SIZE := 15104k
-  MTDPARTS := spi0.0:128k(factory-uboot)ro,128k(u-boot)ro,1536k(kernel),13568k(rootfs),960k(config)ro,64k(art)ro,15104k@0x40000(firmware)
+  MTDPARTS := spi0.0:128k(factory-uboot)ro,128k(u-boot)ro,15104k(firmware),960k(config)ro,64k(art)ro
   SUPPORTED_DEVICES := archer-c7-v4
 endef
 TARGET_DEVICES += archer-c7-v4
@@ -153,8 +153,8 @@ define Device/archer-c7-v5
   DEVICE_TITLE := TP-LINK Archer C7 v5
   BOARDNAME := ARCHER-C7-V5
   TPLINK_BOARD_ID := ARCHER-C7-V5
-  IMAGE_SIZE := 15104k
-  MTDPARTS := spi0.0:128k(factory-uboot)ro,128k(u-boot)ro,64k@0x50000(art)ro,1536k@0xc0000(kernel),13824k(rootfs),15360k@0xc0000(firmware)
+  IMAGE_SIZE := 15360k
+  MTDPARTS := spi0.0:128k(factory-uboot)ro,128k(u-boot)ro,64k@0x50000(art)ro,15360k@0xc0000(firmware)
   SUPPORTED_DEVICES := archer-c7-v5
 endef
 TARGET_DEVICES += archer-c7-v5
@@ -232,7 +232,7 @@ TARGET_DEVICES += eap120-v1
 define Device/re355-v1
   $(Device/tplink-safeloader)
   DEVICE_TITLE := TP-LINK RE355 v1
-  DEVICE_PACKAGES := kmod-ath10k ath10k-firmware-qca988x
+  DEVICE_PACKAGES := kmod-ath10k-ct ath10k-firmware-qca988x-ct
   MTDPARTS := spi0.0:128k(u-boot)ro,6016k(firmware),64k(partition-table)ro,64k(product-info)ro,1856k(config)ro,64k(art)ro
   IMAGE_SIZE := 7936k
   BOARDNAME := RE355
@@ -240,13 +240,15 @@ define Device/re355-v1
   DEVICE_PROFILE := RE355
   TPLINK_HWID := 0x0
   TPLINK_HWREV := 0
+  KERNEL := kernel-bin | patch-cmdline | lzma | tplink-v1-header -O
+  KERNEL_INITRAMFS := kernel-bin | patch-cmdline | lzma | tplink-v1-header
 endef
 TARGET_DEVICES += re355-v1
 
 define Device/re450-v1
   $(Device/tplink-safeloader)
   DEVICE_TITLE := TP-LINK RE450 v1
-  DEVICE_PACKAGES := kmod-ath10k ath10k-firmware-qca988x
+  DEVICE_PACKAGES := kmod-ath10k-ct ath10k-firmware-qca988x-ct
   MTDPARTS := spi0.0:128k(u-boot)ro,6016k(firmware),64k(partition-table)ro,64k(product-info)ro,1856k(config)ro,64k(art)ro
   IMAGE_SIZE := 7936k
   BOARDNAME := RE450
@@ -254,6 +256,8 @@ define Device/re450-v1
   DEVICE_PROFILE := RE450
   TPLINK_HWID := 0x0
   TPLINK_HWREV := 0
+  KERNEL := kernel-bin | patch-cmdline | lzma | tplink-v1-header -O
+  KERNEL_INITRAMFS := kernel-bin | patch-cmdline | lzma | tplink-v1-header
 endef
 TARGET_DEVICES += re450-v1
 
@@ -321,7 +325,7 @@ TARGET_DEVICES += tl-wdr4900-v2
 define Device/tl-wdr6500-v2
   $(Device/tplink-8mlzma)
   DEVICE_TITLE := TP-LINK TL-WDR6500 v2
-  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k ath10k-firmware-qca988x
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k-ct ath10k-firmware-qca988x-ct
   KERNEL := kernel-bin | patch-cmdline | lzma | uImage lzma
   KERNEL_INITRAMFS := kernel-bin | patch-cmdline | lzma | uImage lzma | tplink-v1-header
   BOARDNAME := TL-WDR6500-v2
@@ -341,7 +345,7 @@ TARGET_DEVICES += mw4530r-v1
 define Device/tl-wpa8630-v1
   $(Device/tplink-8mlzma)
   DEVICE_TITLE := TP-LINK TL-WPA8630 v1
-  DEVICE_PACKAGES := kmod-ath10k ath10k-firmware-qca988x
+  DEVICE_PACKAGES := kmod-ath10k-ct ath10k-firmware-qca988x-ct
   BOARDNAME := TL-WPA8630
   DEVICE_PROFILE := TL-WPA8630
   TPLINK_HWID := 0x86300001
@@ -487,7 +491,7 @@ define Device/tl-wr902ac-v1
   $(Device/tplink-safeloader)
   DEVICE_TITLE := TP-LINK TL-WR902AC v1
   DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport \
-	kmod-ath10k ath10k-firmware-qca9887 -swconfig -uboot-envtools
+	kmod-ath10k-ct ath10k-firmware-qca9887-ct -swconfig -uboot-envtools
   BOARDNAME := TL-WR902AC-V1
   DEVICE_PROFILE := TLWR902
   TPLINK_BOARD_ID := TL-WR902AC-V1

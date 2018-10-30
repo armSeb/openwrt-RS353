@@ -162,7 +162,7 @@
 		mc: mc@1fbf8000 {
 			compatible = "mtk,mt7621-mc";
 			reg = <0x1fbf8000 0x8000>;
- 		};
+		};
 
 		uartlite: uartlite@c00 {
 			compatible = "ns16550a";
@@ -341,9 +341,14 @@
 
 		interrupt-parent = <&gic>;
 		interrupts = <GIC_SHARED 20 IRQ_TYPE_LEVEL_HIGH>;
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&sdhci_pins>;
 	};
 
 	xhci: xhci@1E1C0000 {
+		#address-cells = <1>;
+		#size-cells = <0>;
 		status = "okay";
 
 		compatible = "mediatek,mt8173-xhci";
@@ -356,6 +361,25 @@
 
 		interrupt-parent = <&gic>;
 		interrupts = <GIC_SHARED 22 IRQ_TYPE_LEVEL_HIGH>;
+
+		/*
+		 * Port 1 of both hubs is one usb slot and referenced here.
+		 * The binding doesn't allow to address individual hubs.
+		 * hub 1 - port 1 is ehci and ohci, hub 2 - port 1 is xhci.
+		 */
+		xhci_ehci_port1: port@1 {
+			reg = <1>;
+			#trigger-source-cells = <0>;
+		};
+
+		/*
+		 * Only the second usb hub has a second port. That port serves
+		 * ehci and ohci.
+		 */
+		ehci_port2: port@2 {
+			reg = <2>;
+			#trigger-source-cells = <0>;
+		};
 	};
 
 	gic: interrupt-controller@1fbc0000 {

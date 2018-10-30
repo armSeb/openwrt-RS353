@@ -1,23 +1,6 @@
+include ./common-buffalo.mk
+
 DEVICE_VARS += ROOTFS_SIZE
-
-define Build/buffalo-tftp-header
-	( \
-		echo -n -e "# Airstation Public Fmt1" | dd bs=32 count=1 conv=sync; \
-		dd if=$@; \
-	) > $@.new
-  mv $@.new $@
-endef
-
-define Build/buffalo-tag
-	$(eval product=$(word 1,$(1)))
-	$(STAGING_DIR_HOST)/bin/buffalo-tag \
-		-c 0x80041000 -d 0x801e8000 -w 3 \
-		-a ath -v 1.99 -m 1.01 -f 1 \
-		-b $(product) -p $(product) \
-		-r M_ -l mlang8 \
-		-i $@ -o $@.new
-	mv $@.new $@
-endef
 
 define Device/buffalo_bhr-4grv2
   ATH_SOC := qca9558
@@ -42,8 +25,17 @@ define Device/buffalo_whr-g301n
   IMAGE_SIZE := 3712k
   IMAGES += factory.bin tftp.bin
   IMAGE/default := append-kernel | pad-to $$$$(BLOCKSIZE) | append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE)
-  IMAGE/factory.bin := $$(IMAGE/default) | buffalo-enc WHR-G301N 1.99 | buffalo-tag WHR-G301N
+  IMAGE/factory.bin := $$(IMAGE/default) | buffalo-enc WHR-G301N 1.99 | buffalo-tag WHR-G301N 3
   IMAGE/tftp.bin := $$(IMAGE/default) | buffalo-tftp-header
   SUPPORTED_DEVICES += whr-g301n
 endef
 TARGET_DEVICES += buffalo_whr-g301n
+
+define Device/pqi_air-pen
+  ATH_SOC := ar9330
+  DEVICE_TITLE := PQI Air-Pen
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2
+  IMAGE_SIZE := 7680k
+  SUPPORTED_DEVICES += pqi-air-pen
+endef
+TARGET_DEVICES += pqi_air-pen

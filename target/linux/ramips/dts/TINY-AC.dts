@@ -19,13 +19,14 @@
 		usb {
 			label = "tiny-ac:green:usb";
 			gpios = <&gpio0 11 GPIO_ACTIVE_LOW>;
+			trigger-sources = <&ohci_port1>, <&ehci_port1>;
+			linux,default-trigger = "usbport";
 		};
 
 		wifi {
 			label = "tiny-ac:orange:wifi";
 			gpios = <&gpio3 0 GPIO_ACTIVE_LOW>;
 		};
-
 	};
 
 	gpio-keys-polled {
@@ -37,7 +38,6 @@
 			gpios = <&gpio0 13 GPIO_ACTIVE_LOW>;
 			linux,code = <KEY_RESTART>;
 		};
-
 	};
 
 	gpio_export {

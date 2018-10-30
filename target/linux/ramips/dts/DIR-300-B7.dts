@@ -10,7 +10,10 @@
 	model = "D-Link DIR-300 B7";
 
 	aliases {
-		led-status = &led_status;
+		led-boot = &led_status;
+		led-failsafe = &led_status;
+		led-running = &led_status;
+		led-upgrade = &led_status;
 	};
 
 	gpio-leds {
@@ -87,7 +90,7 @@
 &pinctrl {
 	state_default: pinctrl0 {
 		gpio {
-			ralink,group = "i2c", "jtag", "rgmii", "mdio", "uartf";
+			ralink,group = "i2c", "jtag", "uartf";
 			ralink,function = "gpio";
 		};
 	};

@@ -10,7 +10,10 @@
 	model = "D-Link DCH-M225";
 
 	aliases {
-		led-status = &led_power;
+		led-boot = &led_power;
+		led-failsafe = &led_power;
+		led-running = &led_power;
+		led-upgrade = &led_power;
 	};
 
 	gpio-keys-polled {
@@ -36,11 +39,13 @@
 		led_power: power {
 			label = "dch-m225:green:power";
 			gpios = <&gpio1 5 GPIO_ACTIVE_LOW>;
+			default-state = "on";
 		};
 
 		status {
 			label = "dch-m225:red:status";
 			gpios = <&gpio1 0 GPIO_ACTIVE_LOW>;
+			default-state = "off";
 		};
 	};
 

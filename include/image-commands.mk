@@ -49,17 +49,17 @@ define Build/eva-image
 	mv $@.new $@
 endef
 
-define Build/make-ras
+define Build/zyxel-ras-image
 	let \
 		newsize="$(subst k,* 1024,$(RAS_ROOTFS_SIZE))"; \
-		$(TOPDIR)/scripts/make-ras.sh \
-			--board $(RAS_BOARD) \
-			--version $(RAS_VERSION) \
-			--kernel $(call param_get_default,kernel,$(1),$(IMAGE_KERNEL)) \
-			--rootfs $@ \
-			--rootfssize $$newsize \
-			$@.new
-	@mv $@.new $@
+		$(STAGING_DIR_HOST)/bin/mkrasimage \
+			-b $(RAS_BOARD) \
+			-v $(RAS_VERSION) \
+			-r $@ \
+			-s $$newsize \
+			-o $@.new \
+			$(if $(findstring separate-kernel,$(word 1,$(1))),-k $(IMAGE_KERNEL)) \
+		&& mv $@.new $@
 endef
 
 define Build/mkbuffaloimg
@@ -332,7 +332,7 @@ metadata_json = \
 
 define Build/append-metadata
 	$(if $(SUPPORTED_DEVICES),-echo $(call metadata_json,$(SUPPORTED_DEVICES)) | fwtool -I - $@)
-	[ ! -s "$(BUILD_KEY)" -o ! -s "$(BUILD_KEY).ucert" ] || { \
+	[ ! -s "$(BUILD_KEY)" -o ! -s "$(BUILD_KEY).ucert" -o ! -s "$@" ] || { \
 		cp "$(BUILD_KEY).ucert" "$@.ucert" ;\
 		usign -S -m "$@" -s "$(BUILD_KEY)" -x "$@.sig" ;\
 		ucert -A -c "$@.ucert" -x "$@.sig" ;\

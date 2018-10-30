@@ -10,7 +10,10 @@
 	model = "GB-PC2";
 
 	aliases {
-		led-status = &led_status;
+		led-boot = &led_status;
+		led-failsafe = &led_status;
+		led-running = &led_status;
+		led-upgrade = &led_status;
 	};
 
 	memory@0 {
@@ -65,15 +68,11 @@
 			label = "gb-pc2:green:lan3";
 			gpios = <&gpio0 15 GPIO_ACTIVE_LOW>;
 		};
-
 	};
 };
 
 &sdhci {
 	status = "okay";
-
-	pinctrl-names = "default";
-	pinctrl-0 = <&sdhci_pins>;
 };
 
 &spi0 {

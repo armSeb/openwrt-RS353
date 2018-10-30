@@ -1,7 +1,7 @@
 / {
 	#address-cells = <1>;
 	#size-cells = <1>;
-	compatible = "ralink,mtk7620a-soc";
+	compatible = "ralink,mt7620a-soc";
 
 	cpus {
 		#address-cells = <1>;
@@ -343,8 +343,8 @@
 
 		spi_cs1: spi1 {
 			spi1 {
-				ralink,group = "spi_cs1";
-				ralink,function = "spi_cs1";
+				ralink,group = "spi refclk";
+				ralink,function = "spi refclk";
 			};
 		};
 
@@ -415,6 +415,13 @@
 			pa {
 				ralink,group = "pa";
 				ralink,function = "pa";
+			};
+		};
+
+		sdhci_pins: sdhci {
+			sdhci {
+				ralink,group = "nd_sd";
+				ralink,function = "sd";
 			};
 		};
 	};
@@ -496,10 +503,15 @@
 		interrupt-parent = <&intc>;
 		interrupts = <14>;
 
+		pinctrl-names = "default";
+		pinctrl-0 = <&sdhci_pins>;
+
 		status = "disabled";
 	};
 
 	ehci: ehci@101c0000 {
+		#address-cells = <1>;
+		#size-cells = <0>;
 		compatible = "generic-ehci";
 		reg = <0x101c0000 0x1000>;
 
@@ -510,9 +522,16 @@
 		phy-names = "usb";
 
 		status = "disabled";
+
+		ehci_port1: port@1 {
+			reg = <1>;
+			#trigger-source-cells = <0>;
+		};
 	};
 
 	ohci: ohci@101c1000 {
+		#address-cells = <1>;
+		#size-cells = <0>;
 		compatible = "generic-ohci";
 		reg = <0x101c1000 0x1000>;
 
@@ -523,6 +542,11 @@
 		phy-names = "usb";
 
 		status = "disabled";
+
+		ohci_port1: port@1 {
+			reg = <1>;
+			#trigger-source-cells = <0>;
+		};
 	};
 
 	pcie: pcie@10140000 {

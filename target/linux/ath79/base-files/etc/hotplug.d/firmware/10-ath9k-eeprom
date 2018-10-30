@@ -116,9 +116,13 @@ case "$FIRMWARE" in
 		ath9k_eeprom_extract_reverse "urloader" 5441 1088
 		;;
 	buffalo,whr-g301n|\
+	buffalo,wzr-hp-g302h-a1a0|\
 	tplink,tl-wr841-v5|\
 	tplink,tl-wr941-v4)
 		ath9k_eeprom_extract "art" 4096 3768
+		;;
+	buffalo,wzr-hp-g450h)
+		ath9k_eeprom_extract "ART" 4096 1088
 		;;
 	ocedo,raccoon|\
 	tplink,tl-wdr3600|\
@@ -137,8 +141,20 @@ case "$FIRMWARE" in
 	tplink,tl-wr741-v1|\
 	tplink,tl-wr743nd-v1|\
 	tplink,tl-wr841-v7|\
+	ubnt,bullet-m|\
+	ubnt,nano-m|\
+	ubnt,rocket-m)
+		ath9k_eeprom_extract "art" 4096 4096
+		;;
+	pqi,air-pen)
+		ath9k_eeprom_extract "art" 4096 2002
+		;;
 	ubnt,unifi)
 		ath9k_eeprom_extract "art" 4096 2048
+		;;
+	wd,mynet-wifi-rangeextender)
+		ath9k_eeprom_extract "art" 4096 4096
+		ath9k_patch_fw_mac_crc $(nvram get wl0_hwaddr) "$mac" 2
 		;;
 	*)
 		ath9k_eeprom_die "board $board is not supported yet"
@@ -147,14 +163,15 @@ case "$FIRMWARE" in
 	;;
 "ath9k-eeprom-pci-0000:00:11.0.bin")
 	case $board in
-	dlink,dir-825-b1)
-		ath9k_eeprom_extract "caldata" 4096 3768
-		ath9k_patch_fw_mac_crc $(mtd_get_mac_text "caldata" 65440) 524
-		;;
+	buffalo,wzr-hp-ag300h|\
 	netgear,wndr3700|\
 	netgear,wndr3700v2|\
 	netgear,wndr3800)
 		ath9k_eeprom_extract "art" 4096 3768
+		;;
+	dlink,dir-825-b1)
+		ath9k_eeprom_extract "caldata" 4096 3768
+		ath9k_patch_fw_mac_crc $(mtd_get_mac_text "caldata" 65440) 524
 		;;
 	*)
 		ath9k_eeprom_die "board $board is not supported yet"
@@ -163,14 +180,15 @@ case "$FIRMWARE" in
 	;;
 "ath9k-eeprom-pci-0000:00:12.0.bin")
 	case $board in
-	dlink,dir-825-b1)
-		ath9k_eeprom_extract "caldata" 20480 3768
-		ath9k_patch_fw_mac_crc $(macaddr_add $(mtd_get_mac_text "caldata" 65460) 1) 524
-		;;
+	buffalo,wzr-hp-ag300h|\
 	netgear,wndr3700|\
 	netgear,wndr3700v2|\
 	netgear,wndr3800)
 		ath9k_eeprom_extract "art" 20480 3768
+		;;
+	dlink,dir-825-b1)
+		ath9k_eeprom_extract "caldata" 20480 3768
+		ath9k_patch_fw_mac_crc $(macaddr_add $(mtd_get_mac_text "caldata" 65460) 1) 524
 		;;
 	*)
 		ath9k_eeprom_die "board $board is not supported yet"

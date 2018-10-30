@@ -1,12 +1,10 @@
-Index: linux-4.14.61/arch/mips/ath79/pci.c
-===================================================================
---- linux-4.14.61.orig/arch/mips/ath79/pci.c
-+++ linux-4.14.61/arch/mips/ath79/pci.c
+--- a/arch/mips/ath79/pci.c
++++ b/arch/mips/ath79/pci.c
 @@ -53,6 +53,15 @@ static const struct ath79_pci_irq ar724x
  	}
  };
  
-+static const struct ath79_pci_irq qca953x_pci_irq_map[] __initconst = {
++static const struct ath79_pci_irq qca953x_pci_irq_map[] = {
 +	{
 +		.bus	= 0,
 +		.slot	= 0,

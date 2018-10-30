@@ -56,6 +56,7 @@ platform_check_image() {
 	e1700|\
 	elecom,wrc-1167ghbk2-s|\
 	elecom,wrc-2533gst|\
+	elecom,wrc-1900gst|\
 	esr-9753|\
 	ew1200|\
 	ex2700|\
@@ -264,6 +265,7 @@ platform_check_image() {
 	tplink,c20-v1|\
 	tplink,c20-v4|\
 	tplink,c50-v3|\
+	tplink,tl-mr3020-v3|\
 	tplink,tl-mr3420-v5|\
 	tplink,tl-wa801nd-v5|\
 	tplink,tl-wr842n-v5|\

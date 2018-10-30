@@ -10,7 +10,10 @@
 	model = "HAME MPR-A1";
 
 	aliases {
-		led-status = &led_system;
+		led-boot = &led_system;
+		led-failsafe = &led_system;
+		led-running = &led_system;
+		led-upgrade = &led_system;
 	};
 
 	gpio-leds {
@@ -102,7 +105,7 @@
 &pinctrl {
 	state_default: pinctrl0 {
 		gpio {
-			ralink,group = "i2c", "jtag", "rgmii", "mdio", "uartf", "led";
+			ralink,group = "i2c", "jtag", "uartf", "led";
 			ralink,function = "gpio";
 		};
 	};

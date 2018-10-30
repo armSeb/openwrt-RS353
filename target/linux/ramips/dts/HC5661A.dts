@@ -10,7 +10,10 @@
 	model = "HiWiFi HC5661A";
 
 	aliases {
-		led-status = &led_system;
+		led-boot = &led_system;
+		led-failsafe = &led_system;
+		led-running = &led_system;
+		led-upgrade = &led_system;
 	};
 
 	chosen {
@@ -20,10 +23,6 @@
 	memory@0 {
 		device_type = "memory";
 		reg = <0x0 0x8000000>;
-	};
-
-	sdhci@10130000 {
-		status = "okay";
 	};
 
 	gpio-leds {
@@ -62,6 +61,10 @@
 			ralink,function = "gpio";
 		};
 	};
+};
+
+&sdhci {
+	status = "okay";
 };
 
 &spi0 {

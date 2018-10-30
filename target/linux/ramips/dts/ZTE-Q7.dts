@@ -10,7 +10,10 @@
 	model = "ZTE Q7";
 
 	aliases {
-		led-status = &led_status_blue;
+		led-boot = &led_status_blue;
+		led-failsafe = &led_status_blue;
+		led-running = &led_status_blue;
+		led-upgrade = &led_status_blue;
 	};
 
 	gpio-leds {
@@ -89,7 +92,7 @@
 &pinctrl {
 	state_default: pinctrl0 {
 		gpio {
-			ralink,group = "i2c", "uartf", "rgmii1", "rgmii2", "ephy", "wled", "nd_sd";
+			ralink,group = "i2c", "uartf", "rgmii1", "rgmii2", "ephy", "wled";
 			ralink,function = "gpio";
 		};
 	};

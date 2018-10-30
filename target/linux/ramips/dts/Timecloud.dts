@@ -10,7 +10,10 @@
 	model = "Thunder Timecloud";
 
 	aliases {
-		led-status = &led_statuso;
+		led-boot = &led_statuso;
+		led-failsafe = &led_statuso;
+		led-running = &led_statuso;
+		led-upgrade = &led_statuso;
 	};
 
 	memory@0 {
@@ -34,7 +37,6 @@
 			label = "timecloud:orange:status";
 			gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>;
 		};
-
 	};
 
 	gpio-keys-polled {
@@ -57,9 +59,6 @@
 
 &sdhci {
 	status = "okay";
-
-	pinctrl-names = "default";
-	pinctrl-0 = <&sdhci_pins>;
 };
 
 &spi0 {

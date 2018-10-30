@@ -10,7 +10,10 @@
 	model = "OY-0001";
 
 	aliases {
-		led-status = &led_power;
+		led-boot = &led_power;
+		led-failsafe = &led_power;
+		led-running = &led_power;
+		led-upgrade = &led_power;
 	};
 
 	chosen {
@@ -93,7 +96,7 @@
 &pinctrl {
 	state_default: pinctrl0 {
 		gpio {
-			ralink,group = "i2c", "uartf", "rgmii1", "rgmii2", "wled", "nd_sd";
+			ralink,group = "i2c", "uartf", "rgmii1", "rgmii2", "wled";
 			ralink,function = "gpio";
 		};
 	};
