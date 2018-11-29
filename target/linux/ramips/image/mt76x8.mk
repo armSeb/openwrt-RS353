@@ -150,6 +150,14 @@ define Device/pbr-d1
 endef
 TARGET_DEVICES += pbr-d1
 
+define Device/skylab_skw92a
+  DTS := SKW92A
+  IMAGE_SIZE := 16064k
+  DEVICE_TITLE := Skylab SKW92A
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci
+endef
+TARGET_DEVICES += skylab_skw92a
+
 define Device/tplink_tl-wa801nd-v5
   $(Device/tplink)
   DTS := TL-WA801NDV5
@@ -283,7 +291,7 @@ define Device/tplink_tl-wr902ac-v3
   TPLINK_HWREV := 0x89
   TPLINK_HWREVADD := 0x1
   TPLINK_HVERSION := 3
-  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-usb-ledtrig-usbport
+  DEVICE_PACKAGES := kmod-mt76x0e kmod-usb2 kmod-usb-ohci kmod-usb-ledtrig-usbport
 endef
 TARGET_DEVICES += tplink_tl-wr902ac-v3
 
@@ -312,6 +320,14 @@ define Device/vocore2lite
     kmod-sdhci-mt7620
 endef
 TARGET_DEVICES += vocore2lite
+
+define Device/wavlink_wl-wn570ha1
+  DTS := WL-WN570HA1
+  IMAGE_SIZE := $(ralink_default_fw_size_8M)
+  DEVICE_TITLE := Wavlink WL-WN570HA1
+  DEVICE_PACKAGES := kmod-mt76x0e
+endef
+TARGET_DEVICES += wavlink_wl-wn570ha1
 
 define Device/wcr-1166ds
   DTS := WCR-1166DS
@@ -383,7 +399,7 @@ define Device/zyxel_keenetic-extra-ii
   DEVICE_TITLE := ZyXEL Keenetic Extra II
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-usb-ledtrig-usbport
   IMAGES += factory.bin
-  IMAGE/factory.bin := $$(IMAGE/sysupgrade.bin) | pad-to $$$$(BLOCKSIZE) | \
+  IMAGE/factory.bin := $$(sysupgrade_bin) | pad-to $$$$(BLOCKSIZE) | \
 	check-size $$$$(IMAGE_SIZE) | zyimage -d 6162 -v "ZyXEL Keenetic Extra II"
 endef
 TARGET_DEVICES += zyxel_keenetic-extra-ii
