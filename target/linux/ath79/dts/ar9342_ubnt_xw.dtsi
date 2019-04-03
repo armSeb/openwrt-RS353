@@ -9,7 +9,14 @@
 	compatible = "ubnt,xw", "qca,ar9342";
 	model = "Ubiquiti Networks XW board";
 
-	gpio-leds {
+	aliases {
+		led-boot = &system;
+		led-running = &system;
+		led-upgrade = &system;
+		led-failsafe = &system;
+	};
+
+	leds {
 		compatible = "gpio-leds";
 
 		link1 {
@@ -27,7 +34,7 @@
 			gpios = <&gpio 13 GPIO_ACTIVE_LOW>;
 		};
 
-		link4 {
+		system: link4 {
 			label = "ubnt:green:link4";
 			gpios = <&gpio 14 GPIO_ACTIVE_LOW>;
 		};
@@ -84,6 +91,7 @@
 			};
 
 			partition@50000 {
+				compatible = "denx,uimage";
 				label = "firmware";
 				reg = <0x050000 0x760000>;
 			};
@@ -108,4 +116,8 @@
 
 	mtd-cal-data = <&eeprom 0x1000>;
 	mtd-mac-address = <&eeprom 0x1002>;
+};
+
+&eth0 {
+	mtd-mac-address = <&eeprom 0x0>;
 };

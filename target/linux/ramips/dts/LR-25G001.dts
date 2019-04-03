@@ -16,7 +16,7 @@
 		led-upgrade = &led_status;
 	};
 
-	gpio-keys-polled {
+	keys {
 		compatible = "gpio-keys-polled";
 		poll-interval = <20>;
 
@@ -33,7 +33,7 @@
 		};
 	};
 
-	gpio-leds {
+	leds {
 		compatible = "gpio-leds";
 
 		led_status: status {
@@ -88,6 +88,7 @@
 			};
 
 			partition@10000 {
+				compatible = "amit,jimage";
 				label = "firmware";
 				reg = <0x10000 0xfe0000>;
 			};

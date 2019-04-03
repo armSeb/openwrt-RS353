@@ -21,7 +21,7 @@
 		bootargs = "console=ttyS0,115200n8";
 	};
 
-	gpio-leds {
+	leds {
 		compatible = "gpio-leds";
 
 		power: power {
@@ -33,23 +33,20 @@
 		diag {
 			label = "bhr-4grv2:orange:diag";
 			gpios = <&gpio 20 GPIO_ACTIVE_LOW>;
-			default-state = "off";
 		};
 
 		vpn_orange {
 			label = "bhr-4grv2:orange:vpn";
 			gpios = <&gpio 3 GPIO_ACTIVE_LOW>;
-			default-state = "off";
 		};
 
 		vpn_green {
 			label = "bhr-4grv2:green:vpn";
 			gpios = <&gpio 18 GPIO_ACTIVE_LOW>;
-			default-state = "off";
 		};
 	};
 
-	gpio-keys-polled {
+	keys {
 		compatible = "gpio-keys-polled";
 		poll-interval = <20>;
 

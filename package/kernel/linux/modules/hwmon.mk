@@ -112,7 +112,7 @@ define KernelPackage/hwmon-ina2xx
   KCONFIG:=CONFIG_SENSORS_INA2XX
   FILES:=$(LINUX_DIR)/drivers/hwmon/ina2xx.ko
   AUTOLOAD:=$(call AutoProbe,ina2xx)
-  $(call AddDepends/hwmon,+kmod-i2c-core +!LINUX_3_18:kmod-regmap)
+  $(call AddDepends/hwmon,+kmod-i2c-core +!LINUX_3_18:kmod-regmap-i2c)
 endef
 
 define KernelPackage/hwmon-ina2xx/description
@@ -142,7 +142,7 @@ define KernelPackage/hwmon-lm63
   KCONFIG:=CONFIG_SENSORS_LM63
   FILES:=$(LINUX_DIR)/drivers/hwmon/lm63.ko
   AUTOLOAD:=$(call AutoProbe,lm63)
-  $(call AddDepends/hwmon,+kmod-i2c-core +kmod-regmap)
+  $(call AddDepends/hwmon,+kmod-i2c-core +kmod-regmap-i2c)
 endef
 
 define KernelPackage/hwmon-lm63/description
@@ -157,7 +157,7 @@ define KernelPackage/hwmon-lm75
   KCONFIG:=CONFIG_SENSORS_LM75
   FILES:=$(LINUX_DIR)/drivers/hwmon/lm75.ko
   AUTOLOAD:=$(call AutoProbe,lm75)
-  $(call AddDepends/hwmon,+kmod-i2c-core +PACKAGE_kmod-thermal:kmod-thermal +kmod-regmap)
+  $(call AddDepends/hwmon,+kmod-i2c-core +PACKAGE_kmod-thermal:kmod-thermal +kmod-regmap-i2c)
 endef
 
 define KernelPackage/hwmon-lm75/description
@@ -287,6 +287,36 @@ endef
 $(eval $(call KernelPackage,hwmon-pc87360))
 
 
+define KernelPackage/pmbus-core
+  TITLE:=PMBus support
+  KCONFIG:= CONFIG_PMBUS
+  FILES:=$(LINUX_DIR)/drivers/hwmon/pmbus/pmbus_core.ko
+  $(call AddDepends/hwmon,+kmod-i2c-core)
+endef
+
+define KernelPackage/pmbus-core/description
+ Kernel modules for Power Management Bus
+endef
+
+$(eval $(call KernelPackage,pmbus-core))
+
+
+define KernelPackage/pmbus-zl6100
+  TITLE:=Intersil / Zilker Labs ZL6100 hardware monitoring
+  KCONFIG:=CONFIG_SENSORS_ZL6100
+  FILES:=$(LINUX_DIR)/drivers/hwmon/pmbus/zl6100.ko
+  AUTOLOAD:=$(call AutoProbe,zl6100)
+  $(call AddDepends/hwmon, +kmod-pmbus-core)
+endef
+
+define KernelPackage/hwmon-sht21/description
+ Kernel module for Intersil / Zilker Labs ZL6100 and
+compatible digital DC-DC controllers
+endef
+
+$(eval $(call KernelPackage,pmbus-zl6100))
+
+
 define KernelPackage/hwmon-pwmfan
   TITLE:=Generic PWM FAN support
   KCONFIG:=CONFIG_SENSORS_PWM_FAN
@@ -339,7 +369,7 @@ define KernelPackage/hwmon-tmp102
   KCONFIG:=CONFIG_SENSORS_TMP102
   FILES:=$(LINUX_DIR)/drivers/hwmon/tmp102.ko
   AUTOLOAD:=$(call AutoProbe,tmp102)
-  $(call AddDepends/hwmon,+kmod-i2c-core +PACKAGE_kmod-thermal:kmod-thermal +kmod-regmap)
+  $(call AddDepends/hwmon,+kmod-i2c-core +PACKAGE_kmod-thermal:kmod-thermal +kmod-regmap-i2c)
 endef
 
 define KernelPackage/hwmon-tmp102/description
@@ -354,7 +384,7 @@ define KernelPackage/hwmon-tmp103
   KCONFIG:=CONFIG_SENSORS_TMP103
   FILES:=$(LINUX_DIR)/drivers/hwmon/tmp103.ko
   AUTOLOAD:=$(call AutoProbe,tmp103)
-  $(call AddDepends/hwmon,+kmod-i2c-core +kmod-regmap)
+  $(call AddDepends/hwmon,+kmod-i2c-core +kmod-regmap-i2c)
 endef
 
 define KernelPackage/hwmon-tmp103/description
