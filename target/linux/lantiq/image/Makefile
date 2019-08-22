@@ -422,6 +422,7 @@ define Device/bintec_rs230
   KERNEL := kernel-bin | append-dtb | lzma | lzma-loader | rs230-ced
   IMAGE/boss-image.ced = append-kernel | append-rootfs | pad-rootfs | rs230-boss-header
   IMAGES := boss-image.ced
+  KERNEL_INITRAMFS := kernel-bin | append-dtb | lzma | lzma-loader | rs230-ced | rs230-boss-header
   IMAGE_SIZE := 15872k
   DEVICE_PACKAGES := kmod-usb-dwc2 wpad-mini kmod-i2c-gpio kmod-swconfig kmod-ledtrig-usbdev
   SUPPORTED_DEVICES += RS230
@@ -819,6 +820,7 @@ define Device/bintec_rs353
   KERNEL := kernel-bin | append-dtb | lzma | lzma-loader | rs353-cev
   IMAGE/boss-image.cev = append-kernel | append-rootfs | pad-rootfs | rs353-boss-header | append-metadata
   IMAGES := boss-image.cev
+  KERNEL_INITRAMFS := kernel-bin | append-dtb | lzma | lzma-loader | rs353-cev | rs353-boss-header
   IMAGE_SIZE := 31232k
   DEVICE_PACKAGES := kmod-usb-dwc2 kmod-ath9k kmod-i2c-gpio kmod-swconfig kmod-usb-ledtrig-usbport wpad-mini ltq-adsl-app
   SUPPORTED_DEVICES += RS353
