@@ -124,8 +124,8 @@ archer-c5|\
 archer-c7)
 	ucidef_set_led_usbport "usb1" "USB1" "tp-link:green:usb1" "usb1-port1"
 	ucidef_set_led_usbport "usb2" "USB2" "tp-link:green:usb2" "usb2-port1"
-	ucidef_set_led_wlan "wlan2g" "WLAN2G" "tp-link:blue:wlan2g" "phy1tpt"
-	ucidef_set_led_wlan "wlan5g" "WLAN5G" "tp-link:blue:wlan5g" "phy0tpt"
+	ucidef_set_led_wlan "wlan2g" "WLAN2G" "tp-link:green:wlan2g" "phy1tpt"
+	ucidef_set_led_wlan "wlan5g" "WLAN5G" "tp-link:green:wlan5g" "phy0tpt"
 	;;
 archer-c58-v1|\
 archer-c59-v1|\
@@ -179,6 +179,7 @@ bsb)
 	ucidef_set_led_default "sys" "SYS" "$board:red:sys" "1"
 	;;
 bullet-m|\
+bullet-m-xw|\
 loco-m-xw|\
 nanostation-m|\
 nanostation-m-xw|\
@@ -672,7 +673,8 @@ rb-2011l|\
 rb-2011uas|\
 rb-2011uas-2hnd|\
 rb-2011uias|\
-rb-2011uias-2hnd)
+rb-2011uias-2hnd|\
+rb-2011uias-2hnd-r2)
 	ucidef_set_led_switch "eth6" "ETH6" "rb:green:eth6" "switch1" "0x20"
 	ucidef_set_led_switch "eth7" "ETH7" "rb:green:eth7" "switch1" "0x10"
 	ucidef_set_led_switch "eth8" "ETH8" "rb:green:eth8" "switch1" "0x08"

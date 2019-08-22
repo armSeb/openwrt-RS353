@@ -277,7 +277,7 @@ static int ag71xx_rings_init(struct ag71xx *ag)
 		return -ENOMEM;
 
 	tx->descs_cpu = dma_alloc_coherent(&ag->pdev->dev, ring_size * AG71XX_DESC_SIZE,
-					   &tx->descs_dma, GFP_ATOMIC);
+					   &tx->descs_dma, GFP_KERNEL);
 	if (!tx->descs_cpu) {
 		kfree(tx->buf);
 		tx->buf = NULL;
@@ -581,6 +581,7 @@ static void ath79_mii0_ctrl_set_if(struct ag71xx *ag)
 		mii_if = AR71XX_MII0_CTRL_IF_GMII;
 		break;
 	case PHY_INTERFACE_MODE_RGMII:
+	case PHY_INTERFACE_MODE_RGMII_ID:
 		mii_if = AR71XX_MII0_CTRL_IF_RGMII;
 		break;
 	case PHY_INTERFACE_MODE_RMII:
@@ -603,6 +604,7 @@ static void ath79_mii1_ctrl_set_if(struct ag71xx *ag)
 		mii_if = AR71XX_MII1_CTRL_IF_RMII;
 		break;
 	case PHY_INTERFACE_MODE_RGMII:
+	case PHY_INTERFACE_MODE_RGMII_ID:
 		mii_if = AR71XX_MII1_CTRL_IF_RGMII;
 		break;
 	default:
@@ -763,10 +765,6 @@ static int ag71xx_hw_enable(struct ag71xx *ag)
 
 static void ag71xx_hw_disable(struct ag71xx *ag)
 {
-	unsigned long flags;
-
-	spin_lock_irqsave(&ag->lock, flags);
-
 	netif_stop_queue(ag->dev);
 
 	ag71xx_hw_stop(ag);
@@ -774,8 +772,6 @@ static void ag71xx_hw_disable(struct ag71xx *ag)
 
 	napi_disable(&ag->napi);
 	del_timer_sync(&ag->oom_timer);
-
-	spin_unlock_irqrestore(&ag->lock, flags);
 
 	ag71xx_rings_cleanup(ag);
 }
@@ -946,18 +942,9 @@ err_drop:
 static int ag71xx_do_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 {
 	struct ag71xx *ag = netdev_priv(dev);
-	int ret;
+
 
 	switch (cmd) {
-	case SIOCETHTOOL:
-		if (ag->phy_dev == NULL)
-			break;
-
-		spin_lock_irq(&ag->lock);
-		ret = phy_ethtool_ioctl(ag->phy_dev, (void *) ifr->ifr_data);
-		spin_unlock_irq(&ag->lock);
-		return ret;
-
 	case SIOCSIFHWADDR:
 		if (copy_from_user
 			(dev->dev_addr, ifr->ifr_data, sizeof(dev->dev_addr)))
@@ -1436,7 +1423,14 @@ static int ag71xx_probe(struct platform_device *pdev)
 	dev->min_mtu = 68;
 	dev->max_mtu = max_frame_len - ag71xx_max_frame_len(0);
 
-	if (of_device_is_compatible(np, "qca,ar7240-eth"))
+	if (of_device_is_compatible(np, "qca,ar7240-eth") ||
+	    of_device_is_compatible(np, "qca,ar7241-eth") ||
+	    of_device_is_compatible(np, "qca,ar7242-eth") ||
+	    of_device_is_compatible(np, "qca,ar9330-eth") ||
+	    of_device_is_compatible(np, "qca,ar9340-eth") ||
+	    of_device_is_compatible(np, "qca,qca9530-eth") ||
+	    of_device_is_compatible(np, "qca,qca9550-eth") ||
+	    of_device_is_compatible(np, "qca,qca9560-eth"))
 		ag->tx_hang_workaround = 1;
 
 	ag->rx_buf_offset = NET_SKB_PAD;

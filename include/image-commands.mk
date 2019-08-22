@@ -120,7 +120,7 @@ define Build/append-uImage-fakehdr
 endef
 
 define Build/tplink-safeloader
-       -$(STAGING_DIR_HOST)/bin/tplink-safeloader \
+	-$(STAGING_DIR_HOST)/bin/tplink-safeloader \
 		-B $(TPLINK_BOARD_ID) \
 		-V $(REVISION) \
 		-k $(IMAGE_KERNEL) \
@@ -230,8 +230,7 @@ define Build/append-uboot
 endef
 
 define Build/pad-to
-	dd if=$@ of=$@.new bs=$(1) conv=sync
-	mv $@.new $@
+	$(call Image/pad-to,$@,$(1))
 endef
 
 define Build/pad-extra

@@ -154,7 +154,7 @@ define Device/archer-c7-v5
   BOARDNAME := ARCHER-C7-V5
   TPLINK_BOARD_ID := ARCHER-C7-V5
   IMAGE_SIZE := 15360k
-  MTDPARTS := spi0.0:128k(factory-uboot)ro,128k(u-boot)ro,64k@0x50000(art)ro,15360k@0xc0000(firmware)
+  MTDPARTS := spi0.0:128k(factory-uboot)ro,128k(u-boot)ro,64k@0x50000(art)ro,128k@0x60000(info)ro,15360k@0xc0000(firmware)
   SUPPORTED_DEVICES := archer-c7-v5
 endef
 TARGET_DEVICES += archer-c7-v5
@@ -172,7 +172,7 @@ define Device/cpe510-520-v1
   IMAGE/sysupgrade.bin := append-rootfs | tplink-safeloader sysupgrade
   IMAGE/factory.bin := append-rootfs | tplink-safeloader factory
   DEVICE_PACKAGES := rssileds
-  MTDPARTS := spi0.0:128k(u-boot)ro,64k(partition-table)ro,64k(product-info)ro,1792k(kernel),5888k(rootfs),192k(config)ro,64k(ART)ro,7680k@0x40000(firmware)
+  MTDPARTS := spi0.0:128k(u-boot)ro,64k(partition-table)ro,64k(product-info)ro,2048k(kernel),5632k(rootfs),192k(config)ro,64k(ART)ro,7680k@0x40000(firmware)
   IMAGE_SIZE := 7680k
 endef
 TARGET_DEVICES += cpe510-520-v1

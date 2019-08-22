@@ -25,7 +25,7 @@ platform_do_upgrade() {
 		do_fixboss
 		;;
 	*)
-		default_do_upgrade "$ARGV"
+		default_do_upgrade "$1"
 		;;
 	esac
 }
