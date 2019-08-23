@@ -420,11 +420,15 @@ define Device/bintec_rs230
   DEVICE_DTS := RS230
   DEVICE_TITLE := Bintec RS230
   KERNEL := kernel-bin | append-dtb | lzma | lzma-loader | rs230-ced
-  IMAGE/boss-image.ced = append-kernel | append-rootfs | pad-rootfs | rs230-boss-header
+  IMAGE/boss-image.ced = append-kernel | append-rootfs | pad-rootfs | rs230-boss-header | append-metadata
   IMAGES := boss-image.ced
   KERNEL_INITRAMFS := kernel-bin | append-dtb | lzma | lzma-loader | rs230-ced | rs230-boss-header
   IMAGE_SIZE := 15872k
-  DEVICE_PACKAGES := kmod-usb-dwc2 wpad-mini kmod-i2c-gpio kmod-swconfig kmod-ledtrig-usbdev
+  DEVICE_PACKAGES := kmod-usb-dwc2 kmod-i2c-gpio kmod-swconfig kmod-ledtrig-usbdev \
+        kmod-ltq-adsl-danube-mei kmod-ltq-adsl-danube \
+        kmod-ltq-adsl-danube-fw-b kmod-ltq-atm-danube \
+        ltq-adsl-app ppp-mod-pppoe \
+        kmod-ath5k wpad-basic
   SUPPORTED_DEVICES += RS230
 endef
 TARGET_DEVICES += bintec_rs230

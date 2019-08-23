@@ -11,6 +11,15 @@
 
 	};
 
+	aliases {
+                led-running = &status_green;
+                led-boot = &status_green;
+                led-wifi = &wlan_green;
+                led-usb1 = &usb_green;
+                led-dsl = &dsl_green;
+        };
+
+
 	memory@0 {
 		device_type = "memory";
 		reg = <0x0 0x4000000>;
@@ -36,7 +45,7 @@
 					#address-cells = <1>;
 					#size-cells = <1>;
 
-					partition@0 {
+					boardconfig:partition@0 {
 						label = "logic_config";
 						reg = <0x00000 0x20000>;
 						read-only;
@@ -90,19 +99,6 @@
 			};
 		};
 
-		etop: etop@E180000 {
-	        	status = "okay";
-        		phy-mode = "mii";
-			lantiq,switch;
-
-			mdio@1e180000.etop-ff {
-		                #address-cells = <1>;
-                		#size-cells = <0>;
-				reg = <0x10>;
-                		compatible = "ltq_mii";
-			};
-		};
-
 		/* warning: passive port
 		only works with active devices */
 		ifxhcd@E101000 {
@@ -111,15 +107,71 @@
 
 	};
 
-	gpio-keys-polled {
-		compatible = "gpio-keys-polled";
-		#address-cells = <1>;
-		#size-cells = <0>;
-		poll-interval = <100>;
+	keys {
+                compatible = "gpio-keys-polled";
+                #address-cells = <1>;
+                #size-cells = <0>;
+                poll-interval = <100>;
 
+                reset {
+                        label = "reset";
+                        gpios = <&gpio 27 GPIO_ACTIVE_LOW>;
+                        linux,code = <0x198>;
+                };
 	};
 
-	gpio-leds {
-		compatible = "gpio-leds";
+	leds {
+		compatible = "gpio-leds";		
+                wlan_green: wlan {
+                        label = "rs230:green:wlan";
+                        gpios = <&gpio 11 GPIO_ACTIVE_LOW>;
+                };
+
+                dsl_green: dsl {
+                        label = "rs230:green:dsl";
+                        gpios = <&gpio 9 GPIO_ACTIVE_LOW>;
+                };
+
+                usb_green: usb {
+                        label = "rs230:green:usb";
+                        gpios = <&gpio 10 GPIO_ACTIVE_LOW>;
+                };
+
+                status_green: status {
+                        label = "rs230:green:status";
+                        gpios = <&gpio 7 GPIO_ACTIVE_LOW>;
+                };
+	
 	};
+
+	usb_vbus: regulator-usb-vbus {
+		compatible = "regulator-fixed";
+
+		regulator-name = "USB_VBUS";
+
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+
+		gpio = <&gpio 20 GPIO_ACTIVE_LOW>;
+		enable-active-low;
+	};
+};
+
+&pci0 {
+	status = "okay";
+	gpio-reset = <&gpio 18 GPIO_ACTIVE_HIGH>;
+};
+
+&gsw {
+        phy-mode = "mii";
+        mtd-mac-address = <&boardconfig 0x428>;
+};
+
+&usb_phy {
+	status = "okay";
+};
+
+&usb {
+	status = "okay";
+	vbus-supply = <&usb_vbus>;
 };

@@ -57,7 +57,8 @@
 #define SEAMA_MAGIC		0x5ea3a417
 #define WRG_MAGIC		0x20040220
 #define WRGG03_MAGIC		0x20080321
-#define BINTEC_MAGIC		0x54454c44	/* Teldat */
+#define TELDAT_MAGIC		0x54454c44	/* "TELDAT" */
+#define BINTEC_MAGIC		0x42494e54	/* "BINTEC" */
 
 #if !defined(__BYTE_ORDER)
 #error "Unknown byte order"
@@ -81,7 +82,7 @@ enum mtd_image_format {
 	MTD_IMAGE_FORMAT_SEAMA,
 	MTD_IMAGE_FORMAT_WRG,
 	MTD_IMAGE_FORMAT_WRGG03,
-    MTD_IMAGE_FORMAT_BINTEC,
+	MTD_IMAGE_FORMAT_BINTEC,
 };
 
 static char *buf = NULL;
@@ -215,6 +216,10 @@ image_check(int imagefd, const char *mtd)
 		imageformat = MTD_IMAGE_FORMAT_WRG;
 	else if (le32_to_cpu(magic) == WRGG03_MAGIC)
 		imageformat = MTD_IMAGE_FORMAT_WRGG03;
+	else if (le32_to_cpu(magic) == TELDAT_MAGIC)
+                imageformat = MTD_IMAGE_FORMAT_BINTEC;
+	else if (le32_to_cpu(magic) == BINTEC_MAGIC)
+                imageformat = MTD_IMAGE_FORMAT_BINTEC;
 
 	switch (imageformat) {
 	case MTD_IMAGE_FORMAT_TRX:

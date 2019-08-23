@@ -35,12 +35,12 @@
 
 #define KSEG1ADDR(a)		((((unsigned)(a)) & 0x1fffffffU) | KSEG1)
 
-#undef LZMA_DEBUG
+#define LZMA_DEBUG
 
 #ifdef LZMA_DEBUG
-#  define DBG(f, a...)	printf(f, ## a)
+#define DBG(f, a...)	printf(f, ## a)
 #else
-#  define DBG(f, a...)	do {} while (0)
+#define DBG(f, a...)	do {} while (0)
 #endif
 
 #define IH_MAGIC_OKLI		0x4f4b4c49	/* 'OKLI' */
@@ -138,9 +138,11 @@ static int lzma_decompress(unsigned char *outStream)
 	int ret;
 
 	lzma_state.Probs = (CProb *) workspace;
+	printf("LZMA decompress....\n");
 
 	ret = LzmaDecode(&lzma_state, lzma_data, lzma_datasize, &ip, outStream,
 			 lzma_outsize, &op);
+	printf("Decompress finish...\n");
 
 	if (ret != LZMA_RESULT_OK) {
 		int i;
