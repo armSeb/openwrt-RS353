@@ -15,7 +15,7 @@
                 led-running = &status_green;
                 led-boot = &status_green;
                 led-wifi = &wlan_green;
-                led-usb1 = &usb_green;
+                led-usb = &usb_green;
                 led-dsl = &dsl_green;
         };
 
@@ -83,6 +83,10 @@
 			pinctrl-0 = <&state_default>;
 
 			state_default: pinmux {
+				stp {
+					lantiq,groups = "stp";
+					lantiq,function = "stp";
+				};
 				mdio {
                                         lantiq,groups = "mdio";
                                         lantiq,function = "mdio";
@@ -90,6 +94,11 @@
 				ebu {
 					lantiq,groups = "ebu cs1";
 					lantiq,function = "ebu";
+				};
+				usb_rst {
+					lantiq,pins = "io17";
+					lantiq,pull = <2>;
+					lantiq,output = <1>;
 				};
 				switch_rst {
 					lantiq,pins = "io19";
@@ -159,7 +168,7 @@
 
 &pci0 {
 	status = "okay";
-	gpio-reset = <&gpio 18 GPIO_ACTIVE_HIGH>;
+	gpio-reset = <&gpio 21 GPIO_ACTIVE_HIGH>;
 };
 
 &gsw {

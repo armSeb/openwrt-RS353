@@ -796,7 +796,7 @@ static void usage(void)
 	}
     if (mtd_fixboss) {
 	    fprintf(stderr,
-	"        fixboss        fix the boss checksum in bootmonitor parameters\n");
+	"        fixboss                 fix the boss checksum in bootmonitor parameters\n");
 	}
 	if (mtd_fixseama) {
 	    fprintf(stderr,
