@@ -79,6 +79,9 @@ buffalo,wbmr-300hpd)
 	ucidef_set_led_switch "lan3" "LAN3" "wbmr300:green:lan3" "switch0" "0x20"
 	ucidef_set_led_default "router" "router" "wbmr300:green:router" "1"
 	;;
+bintec,rs230)
+	ucidef_set_led_wlan "wifi" "wifi" "rs230:green:wlan" "phy0radio"
+	;;
 *)
 	;;
 esac

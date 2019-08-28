@@ -428,7 +428,8 @@ define Device/bintec_rs230
         kmod-ltq-adsl-danube-mei kmod-ltq-adsl-danube \
         kmod-ltq-adsl-danube-fw-b kmod-ltq-atm-danube \
         ltq-adsl-app ppp-mod-pppoe ppp-mod-pppoa \
-        kmod-rt2800-pci rt2800-pci-firmware wpad-basic ethtool
+        kmod-rt2800-pci rt2800-pci-firmware wpad-basic ethtool \
+	kmod-ledtrig-netdev kmod-usb-ledtrig-usbport
   SUPPORTED_DEVICES += RS230
 endef
 TARGET_DEVICES += bintec_rs230
