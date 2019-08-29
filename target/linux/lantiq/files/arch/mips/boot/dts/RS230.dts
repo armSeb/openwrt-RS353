@@ -181,10 +181,9 @@
 		#size-cells = <0>;
 		switch0: switch@0 {
 			compatible = "marvell,mv88e6085";
-			reg = <0x0>;
+			reg = <0>;
 			#address-cells = <1>;
 			#size-cells = <0>;
-/*			reset-gpios = <&gpio 19 GPIO_ACTIVE_HIGH>; */
 
 			ports {
 				#address-cells = <1>;
