@@ -1,0 +1,13 @@
+Index: linux-4.19.68/drivers/net/ethernet/lantiq_etop.c
+===================================================================
+--- linux-4.19.68.orig/drivers/net/ethernet/lantiq_etop.c
++++ linux-4.19.68/drivers/net/ethernet/lantiq_etop.c
+@@ -354,7 +354,7 @@ ltq_etop_mdio_probe(struct net_device *d
+ 
+ 	if (!phydev) {
+ 		netdev_err(dev, "no PHY found\n");
+-		return -ENODEV;
++		return 0;
+ 	}
+ 
+ 	phydev = phy_connect(dev, phydev_name(phydev),

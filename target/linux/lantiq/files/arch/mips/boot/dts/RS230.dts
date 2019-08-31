@@ -179,12 +179,12 @@
 	mdio-bus {
 		#address-cells = <1>;
 		#size-cells = <0>;
+
 		switch0: switch@0 {
 			compatible = "marvell,mv88e6085";
 			reg = <0>;
 			#address-cells = <1>;
 			#size-cells = <0>;
-
 			ports {
 				#address-cells = <1>;
 				#size-cells = <0>;
@@ -214,7 +214,7 @@
 					label = "lan5";
 				};
 
-				switch0phy5: port@5 {
+				port@5 {
 					reg = <5>;
 					label = "cpu";
 					ethernet = <&gsw>;
