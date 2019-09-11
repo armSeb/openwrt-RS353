@@ -112,6 +112,12 @@
 					lantiq,pull = <2>;
 					lantiq,output = <1>;
 				};
+			/*	i2c {
+					lantiq,pins = "io25", "io26"; /* port i2c */
+			/*		lantiq,open-drain;
+					lantiq,pull = <2>;
+				};*/
+
 			};
 		};
 
@@ -126,7 +132,7 @@
         i2c@0 {
                 compatible = "i2c-gpio";
                 gpios = <&gpio 25 0 /* sda */
-                        &gpio 16 0 /* scl */
+                        &gpio 26 0 /* scl */
                         >;
                 i2c-gpio,delay-us = <2>;        /* ~100 kHz */
 
