@@ -112,12 +112,6 @@
 					lantiq,pull = <2>;
 					lantiq,output = <1>;
 				};
-			/*	i2c {
-					lantiq,pins = "io25", "io26"; /* port i2c */
-			/*		lantiq,open-drain;
-					lantiq,pull = <2>;
-				};*/
-
 			};
 		};
 
