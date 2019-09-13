@@ -277,9 +277,9 @@
 			lantiq,function = "mdio";
 		};
 		i2c {
-		 	lantiq,pins = "io19", "io20"; /* port i2c */
-		 	lantiq,open-drain;
-		 	lantiq,pull = <2>;
+			lantiq,pins = "io19", "io20"; /* port i2c */
+			lantiq,open-drain;
+			lantiq,pull = <2>;
 		};
 		gphy-leds {
 			lantiq,groups = "gphy0 led0", "gphy0 led1",
