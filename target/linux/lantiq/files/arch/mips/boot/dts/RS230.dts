@@ -111,6 +111,11 @@
 					lantiq,pull = <2>;
 					lantiq,output = <1>;
 				};
+				i2c {
+					lantiq,pins = "io25", "io26";
+					lantiq,open-drain;
+					lantiq,pull = <1>;
+				};
 			};
 		};
 
@@ -245,6 +250,7 @@
 					ethernet = <&gsw>;
 					phy-mode = "sgmii";
 					fixed-link {
+						/* The CPU port can only do 100M speed */
 						speed = <100>;
 						full-duplex;
 					};
