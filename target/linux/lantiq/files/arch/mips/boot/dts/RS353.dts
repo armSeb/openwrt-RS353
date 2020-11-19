@@ -110,12 +110,12 @@
 
 		reset {
 			label = "reset";
-			gpios = <&gpio 34 0>;
+			gpios = <&gpio 34 1>;
 			linux,code = <0x198>;
 		};
 		function {
 			label = "function";
-			gpios = <&gpio 35 0>;
+			gpios = <&gpio 35 1>;
 			linux,code = <0x100>; /*BTN_0*/
 		};
 	};
