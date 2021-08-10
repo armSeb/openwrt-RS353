@@ -21,7 +21,7 @@ platform_do_upgrade() {
 		nand_do_upgrade $1
 		;;
 	bintec,rs230|bintec,rs353)
-		default_do_upgrade "$ARGV"
+		default_do_upgrade "$1"
 		do_fixboss
 		;;
 	*)
