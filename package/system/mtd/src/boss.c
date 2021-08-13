@@ -147,6 +147,8 @@ mtd_fixboss(const char *mtd, size_t offset, size_t data_size)
 		fprintf(stderr, "Done.\n");
 
 	close (fd);
+	free(first_block);
+	free(buf);
 	sync();
 	return 0;
 
