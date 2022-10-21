@@ -14,8 +14,9 @@
 	aliases {
 		led-running = &status;
 		led-boot = &status;
+		led-failsafe = &status;
+		led-upgrade = &status;
 		led-wifi = &wlan;
-		led-usb2 = &usb; /* Front port is mapped to device 2 */
 		led-dsl = &dsl;
 	};
 
@@ -134,6 +135,8 @@
 		usb: usb {
 			label = "green:usb";
 			gpios = <&gpio 11 GPIO_ACTIVE_LOW>;
+			trigger-sources = <&ehci_port1>, <&ehci_port2>;
+			linux,default-trigger = "usbport";
 		};
 
 		status: status {
