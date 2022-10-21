@@ -29,3 +29,7 @@ platform_do_upgrade() {
 		;;
 	esac
 }
+
+do_fixboss() {
+	mtd fixboss firmware
+}
