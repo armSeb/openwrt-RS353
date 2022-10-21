@@ -269,6 +269,24 @@
 	};
 };
 
+&pcie0 {
+	pcie@0 {
+		reg = <0 0 0 0 0>;
+		#interrupt-cells = <1>;
+		#size-cells = <2>;
+		#address-cells = <3>;
+		device_type = "pci";
+
+		ath9k: wifi@168c,0033 {
+			compatible = "pci168c,0033";
+			reg = <0 0 0 0 0>;
+			nvmem-cells = <&macaddr_boardconfig_428>;
+			nvmem-cell-names = "mac-address";
+			mac-address-increment = <9>;
+		};
+	};
+};
+
 &usb_phy0 {
 	status = "okay";
 };
