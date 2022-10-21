@@ -254,6 +254,8 @@ void loader_main(unsigned long reg_a0, unsigned long reg_a1,
 
 	printf("Starting kernel at %08x...\n\n", kernel_la);
 
+	reg_a0 = 0; // Weird fix regarding invalid argument count from the BOSS bootloader
+
 #ifdef CONFIG_KERNEL_CMDLINE
 	reg_a0 = kernel_argc;
 	reg_a1 = (unsigned long) kernel_argv;
