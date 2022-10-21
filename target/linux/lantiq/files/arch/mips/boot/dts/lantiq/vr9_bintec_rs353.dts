@@ -155,6 +155,11 @@
 	};
 };
 
+&eth0 {
+        nvmem-cells = <&macaddr_boardconfig_428>;
+        nvmem-cell-names = "mac-address";
+};
+
 &gphy0 {
         lantiq,gphy-mode = <GPHY_MODE_GE>;
         resets = <&reset0 31 30>, <&reset1 7 7>;
@@ -280,4 +285,14 @@
 &usb1 {
 	status = "okay";
 	vbus-supply = <&usb_vbus>;
+};
+
+&boardconfig {
+        compatible = "nvmem-cells";
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        macaddr_boardconfig_428: macaddr@428 {
+                reg = <0x428 0x6>;
+        };
 };
