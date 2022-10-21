@@ -201,6 +201,20 @@ define Device/avm_fritz7430
 endef
 TARGET_DEVICES += avm_fritz7430
 
+define Device/bintec_rs353
+  $(Device/dsa-migration)
+  DEVICE_VENDOR := Bintec
+  DEVICE_MODEL := RS353
+  BOARD_NAME := bintec_rs353
+  KERNEL := kernel-bin | append-dtb | lzma | lzma-loader | rs353-cev
+  IMAGE/boss-image.cev = append-kernel | append-rootfs | pad-rootfs | rs353-boss-header | append-metadata
+  IMAGES := boss-image.cev
+  IMAGE_SIZE := 31232k
+  DEVICE_PACKAGES := kmod-usb-dwc2 kmod-ath9k kmod-i2c-gpio kmod-swconfig kmod-usb-ledtrig-usbport wpad-mini ltq-adsl-app
+  SUPPORTED_DEVICES += rs353
+endef
+TARGET_DEVICES += bintec_rs353
+
 define Device/bt_homehub-v5a
   $(Device/dsa-migration)
   $(Device/NAND)

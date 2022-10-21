@@ -170,18 +170,6 @@ define Device/AVM_preloader
   KERNEL_INITRAMFS := kernel-bin | append-dtb | lzma | eva-image
 endef
 
-define Device/bintec_rs353
-  DEVICE_TITLE := Bintec RS353
-  DEVICE_DTS := vr9_bintec_rs353
-  KERNEL := kernel-bin | append-dtb | lzma | lzma-loader | rs353-cev
-  IMAGE/boss-image.cev = append-kernel | append-rootfs | pad-rootfs | rs353-boss-header | append-metadata
-  IMAGES := boss-image.cev
-  IMAGE_SIZE := 31232k
-  DEVICE_PACKAGES := kmod-usb-dwc2 kmod-ath9k kmod-i2c-gpio kmod-swconfig kmod-usb-ledtrig-usbport wpad-mini ltq-adsl-app
-  SUPPORTED_DEVICES += rs353
-endef
-TARGET_DEVICES += bintec_rs353
-
 ifeq ($(SUBTARGET),ase)
 DEFAULT_SOC := amazonse
 include amazonse.mk
