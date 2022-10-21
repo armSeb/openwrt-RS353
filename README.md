@@ -3,8 +3,22 @@ This repository provides OpenWrt support for the followig devices:
 Bintec RS230 (partial support)
 Bintec RS353 (full support)
 
+This repository contains two branchs:
 
-Build:
+- old_2021: Old version based on the OpenWrt git master
+- openwrt-22.03: WIP based on the OpenWrt git 22.03 branch
+
+To get the right openWRT version, do the following steps:
+
+git clone https://github.com/armSeb/openwrt-RS353.git
+git checkout old_2021
+
+
+To Build:
+
+make menuconfig
+
+Then, select the right platform
 
 For RS230:
 
