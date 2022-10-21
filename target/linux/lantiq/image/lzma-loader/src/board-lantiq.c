@@ -18,6 +18,10 @@
 #define ASC_TBUF		(UART_BASE | 0x20)
 #define ASC_FSTAT		(UART_BASE | 0x48)
 
+#define LTQ_WDT_MEMBASE_CR	0xbf8803f0 // Membase + control register
+#define LTQ_WDT_PW1             0x00BE0000
+#define LTQ_WDT_PW2             0x00DC0000
+
 #define TXMASK          0x3F00
 #define TXOFFSET        8
 
@@ -30,4 +34,8 @@ void board_putc(char c)
 
 void board_init(void)
 {
+        /* Disable watchdog to avoid conflict with the OpenWRT Kernel, causing random reset */
+        WRITEREG(LTQ_WDT_MEMBASE_CR, LTQ_WDT_PW1); // First magic word
+        WRITEREG(LTQ_WDT_MEMBASE_CR, LTQ_WDT_PW2); // Power off WDT
+
 }
