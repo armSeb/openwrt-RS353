@@ -49,6 +49,38 @@ define Build/fullimage
 	rm $@.tmp
 endef
 
+define Build/rs353-cev
+  rm -f $(KDIR)/boss.bin.gz
+  # Add CEV header (magic). The name "boss.bin" have to be in the gzip header.
+  echo -ne "\x10\x00\x00\x02\x00\x00\x00\x00\x43\x45\x56\x00\x00\x00\x00\x00" > $(KDIR)/boss.bin
+  # Append data
+  cat $@ >> $(KDIR)/boss.bin
+  # gzip the file
+  gzip $(KDIR)/boss.bin
+  # Add a fake BOSS header to align image to flash sectors.
+  dd if=/dev/zero of=$(KDIR)/boss.1 bs=52 count=1
+  cat $(KDIR)/boss.bin.gz >> $(KDIR)/boss.1
+  # Align with flash sector size minus boss header size
+  dd if=$(KDIR)/boss.1 of=$@ bs=131072 conv=sync
+endef
+
+define Build/rs353-boss-header
+  mkbossimg rs353 $@
+  mv bossImage.img $@
+endef
+
+define Build/lzma-loader
+  rm -rf $(KDIR)/lzma-loader
+  $(NO_TRACE_MAKE) -C lzma-loader \
+          KDIR=$(KDIR) \
+          LZMA_TEXT_START=0x80a00000 \
+          LOADADDR=0x80002000 \
+          PLATFORM="lantiq" \
+          LOADER_DATA="$@" \
+          compile
+  cp $(KDIR)/lzma-loader/loader.bin $@
+endef
+
 define Build/loader-okli-compile
 	rm -rf $@.src
 	$(MAKE) -C lzma-loader \
@@ -137,6 +169,18 @@ define Device/AVM_preloader
 	prepend-loader-okli $(1)
   KERNEL_INITRAMFS := kernel-bin | append-dtb | lzma | eva-image
 endef
+
+define Device/bintec_rs353
+  DEVICE_TITLE := Bintec RS353
+  DEVICE_DTS := vr9_bintec_rs353
+  KERNEL := kernel-bin | append-dtb | lzma | lzma-loader | rs353-cev
+  IMAGE/boss-image.cev = append-kernel | append-rootfs | pad-rootfs | rs353-boss-header | append-metadata
+  IMAGES := boss-image.cev
+  IMAGE_SIZE := 31232k
+  DEVICE_PACKAGES := kmod-usb-dwc2 kmod-ath9k kmod-i2c-gpio kmod-swconfig kmod-usb-ledtrig-usbport wpad-mini ltq-adsl-app
+  SUPPORTED_DEVICES += rs353
+endef
+TARGET_DEVICES += bintec_rs353
 
 ifeq ($(SUBTARGET),ase)
 DEFAULT_SOC := amazonse
