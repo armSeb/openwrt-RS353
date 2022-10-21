@@ -57,6 +57,7 @@
 #define SEAMA_MAGIC		0x5ea3a417
 #define WRG_MAGIC		0x20040220
 #define WRGG03_MAGIC		0x20080321
+#define BINTEC_MAGIC		0x54454c44	/* Teldat */
 
 #if !defined(__BYTE_ORDER)
 #error "Unknown byte order"
@@ -80,6 +81,7 @@ enum mtd_image_format {
 	MTD_IMAGE_FORMAT_SEAMA,
 	MTD_IMAGE_FORMAT_WRG,
 	MTD_IMAGE_FORMAT_WRGG03,
+	MTD_IMAGE_FORMAT_BINTEC,
 };
 
 static char *buf = NULL;
@@ -731,6 +733,10 @@ resume:
 			if (mtd_fixwrgg)
 				mtd_fixwrgg(mtd, 0, 0);
 			break;
+		case MTD_IMAGE_FORMAT_BINTEC:
+			if(mtd_fixboss)
+				mtd_fixboss(mtd, 0, 0);
+			break;
 		default:
 			break;
 		}
@@ -784,6 +790,10 @@ static void usage(void)
 	    fprintf(stderr,
 	"        fixtrx                  fix the checksum in a trx header on first boot\n");
 	}
+	if(mtd_fixboss) {
+	    fprintf(stderr,
+	"        fixboss                 fix the boss checksum in bootmonitor parameters\n");
+	}
 	if (mtd_fixseama) {
 	    fprintf(stderr,
 	"        fixseama                fix the checksum in a seama header on first boot\n");
@@ -809,14 +819,14 @@ static void usage(void)
 	"        -s <number>             skip the first n bytes when appending data to the jffs2 partiton, defaults to \"0\"\n"
 	"        -p <number>             write beginning at partition offset\n"
 	"        -l <length>             the length of data that we want to dump\n");
-	if (mtd_fixtrx) {
+	if (mtd_fixtrx || mtd_fixboss) {
 	    fprintf(stderr,
-	"        -M <magic>              magic number of the image header in the partition (for fixtrx)\n"
+	"        -M <magic>              magic number of the image header in the partition (for fixtrx / fixboss)\n"
 	"        -o offset               offset of the image header in the partition(for fixtrx)\n");
 	}
-	if (mtd_fixtrx || mtd_fixseama || mtd_fixwrg || mtd_fixwrgg) {
+	if (mtd_fixtrx || mtd_fixseama || mtd_fixwrg || mtd_fixwrgg || mtd_fixboss) {
 		fprintf(stderr,
-	"        -c datasize             amount of data to be used for checksum calculation (for fixtrx / fixseama / fixwrg / fixwrgg)\n");
+	"        -c datasize             amount of data to be used for checksum calculation (for fixtrx / fixseama / fixwrg / fixwrgg / fixboss)\n");
 	}
 	if (mtd_tpl_recoverflag_write) {
 		fprintf(stderr,
@@ -860,6 +870,7 @@ int main (int argc, char **argv)
 		CMD_UNLOCK,
 		CMD_JFFS2WRITE,
 		CMD_FIXTRX,
+		CMD_FIXBOSS,
 		CMD_FIXSEAMA,
 		CMD_FIXWRG,
 		CMD_FIXWRGG,
@@ -985,6 +996,9 @@ int main (int argc, char **argv)
 	} else if (((strcmp(argv[0], "fixtrx") == 0) && (argc == 2)) && mtd_fixtrx) {
 		cmd = CMD_FIXTRX;
 		device = argv[1];
+	} else if (((strcmp(argv[0], "fixboss") == 0) && (argc == 2)) && mtd_fixboss) {
+		cmd = CMD_FIXBOSS;
+		device = argv[1];
 	} else if (((strcmp(argv[0], "fixseama") == 0) && (argc == 2)) && mtd_fixseama) {
 		cmd = CMD_FIXSEAMA;
 		device = argv[1];
@@ -1079,6 +1093,11 @@ int main (int argc, char **argv)
 		case CMD_FIXTRX:
 			if (mtd_fixtrx) {
 				mtd_fixtrx(device, offset, data_size);
+			}
+			break;
+		case CMD_FIXBOSS:
+			if (mtd_fixboss) {
+				mtd_fixboss(device, offset, data_size);
 			}
 			break;
 		case CMD_RESETBC:
