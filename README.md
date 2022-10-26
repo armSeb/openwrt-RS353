@@ -5,8 +5,8 @@ This repository provides OpenWRT support for the followig devices:
 
 This repository contains two branchs:
 
--   old_2021: Old version based on the OpenWrt git master
--   openwrt-22.03: WIP based on the OpenWrt git 22.03 branch
+ - old_2021: Old version based on the OpenWrt git master
+ - openwrt-22.03: WIP based on the OpenWrt git 22.03 branch
 
 For instance, if you wish to build the openwrt-22.03 for the RS353 target
 
@@ -19,14 +19,14 @@ For instance, if you wish to build the openwrt-22.03 for the RS353 target
 For RS230 (for now only available in the old_2021 branch):
 
 > Target System - Lantiq
->  Subtarget - XWAY 
->  Target Profile - Bintec RS230
+> Subtarget - XWAY 
+> Target Profile - Bintec RS230
 
 For RS353: 
 
 > Target System - Lantiq
->  Subtarget - XRX200
->  Target Profile - Bintec RS353
+> Subtarget - XRX200
+> Target Profile - Bintec RS353
 
 Then, select packages and type make.
 
