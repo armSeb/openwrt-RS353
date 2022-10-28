@@ -210,7 +210,7 @@ define Device/bintec_rs353
   IMAGE/boss-image.cev = append-kernel | append-rootfs | pad-rootfs | rs353-boss-header | append-metadata
   IMAGES := boss-image.cev
   IMAGE_SIZE := 31232k
-  DEVICE_PACKAGES := kmod-usb-dwc2 kmod-ath9k kmod-i2c-gpio kmod-swconfig kmod-usb-ledtrig-usbport wpad-mini ltq-adsl-app
+  DEVICE_PACKAGES := kmod-usb-dwc2 kmod-ath9k kmod-i2c-gpio kmod-swconfig kmod-usb-ledtrig-usbport wpad-mini
   SUPPORTED_DEVICES += rs353
 endef
 TARGET_DEVICES += bintec_rs353
