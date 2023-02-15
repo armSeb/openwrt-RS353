@@ -88,15 +88,14 @@
 
 	i2c@0 {
 		compatible = "i2c-gpio";
-		gpios = <&gpio 20 0 /* sda */
-			&gpio 19 0 /* scl */
-			>;
+		sda-gpios = <&gpio 20 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
+		scl-gpios = <&gpio 19 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
 		i2c-gpio,delay-us = <2>;	/* ~100 kHz */
 
 		#address-cells = <1>;
 		#size-cells = <0>;
-		s35390a: s35390a@30 {
-			compatible = "ssi,s35390a";
+		rtc@30 {
+			compatible = "s35390a";
 			reg = <0x30>;
 		};
 	};
